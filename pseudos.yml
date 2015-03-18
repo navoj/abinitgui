@@ -1,0 +1,29 @@
+NC_LDA_TM:
+  Ti:
+  - !NcAbinitPseudo {Z: 22, Z_val: 4.0, l_local: 0, l_max: 2, md5: 9d5151159dba5b2d9be995f71cdbe165,
+    nlcc_radius: 2.82741504495369, path: 'https://gui.abinit.org/PSPS/NC_LDA_TM/Ti/22ti.pspnc',
+    summary: 'Troullier-Martins psp for element  Ti        Thu Oct 27 17:33:40 EDT
+      1994'}
+  Sc:
+  - !NcAbinitPseudo {Z: 21, Z_val: 3.0, l_local: 0, l_max: 2, md5: e828ade5d3d56489b43069c2fe98aee1,
+    nlcc_radius: 3.23292695886301, path: 'https://gui.abinit.org/PSPS/NC_LDA_TM/Sc/21sc.pspnc',
+    summary: 'Troullier-Martins psp for element  Sc        Thu Oct 27 17:33:22 EDT
+      1994'}
+  Si:
+  - !NcAbinitPseudo {Z: 14, Z_val: 4.0, l_local: 2, l_max: 2, md5: 3916b143991b1cfa1542b130be320e5e,
+    nlcc_radius: 1.80626423934776, path: ./PSP/NC_LDA_TM/Si/14si.pspnc, summary: 'Troullier-Martins
+      psp for element  Si        Thu Oct 27 17:31:21 EDT 1994'}
+NC_LDA_FHI:
+  Si:
+  - !NcAbinitPseudo {Z: 14, Z_val: 4.0, l_local: 2, l_max: 3, md5: e1f77e454338dabe57c01050e30e7ff6,
+    nlcc_radius: 0.0, path: ./PSP/NC_LDA_FHI/Si/14-Si.LDA.fhi, summary: 'silicon,
+      fhi98PP : Trouiller-Martins-type, LDA Ceperley/Alder Perdew/Wang (1992), l=
+      2 local'}
+  - !NcAbinitPseudo {Z: 14, Z_val: 4.0, l_local: 0, l_max: 3, md5: 20762baed5845f6e7d02fd9ba176d70f,
+    nlcc_radius: 0.0, path: ./PSP/NC_LDA_FHI/Si/0.14-Si.LDA.fhi, summary: 'silicon,
+      fhi98PP : Trouiller-Martins-type, LDA Ceperley/Alder Perdew/Wang (1992), l=
+      0 local'}
+NC_LDA_Teter:
+  Si:
+  - !NcAbinitPseudo {Z: 14, Z_val: 4.0, l_local: 2, l_max: 2, md5: ccbfa7a3d7baa201123ecd516a9a00dc,
+    nlcc_radius: 0.0, path: ./PSP/NC_LDA_Teter/Si/14si.phoney.mod, summary: 2 bohr rc 15 hartree ec psp for silicon 8 November 1991 (new)}

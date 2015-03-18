@@ -1,31 +1,53 @@
-Machine2: !remotemachine
-  abinitPath: ''
-  gatewayConnect: null
-  name: Machine2
-  remoteConnect: !connectioninfo {host: '', keyPath: null, login: '', password: !password '6i2NGjig240=',
-    useKey: false}
-  simulationPath: ./MySims
-  submissionScript: !slurmscript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
-    inputPath: '', logPath: '', memoryMax: '2000', nbProcs: '2', parallel: true, postProcessPart: '',
-    preProcessPart: '', simName: simulation, system: SLURM, timeLimit: '23:59:59'}
-Machine1: !gatewaymachine
-  abinitPath: ''
-  gatewayConnect: !connectioninfo {host: '', keyPath: null, login: '', password: !password '6i2NGjig240=',
-    useKey: false}
-  name: Machine1
-  remoteConnect: !connectioninfo {host: '', keyPath: null, login: '', password: !password '6i2NGjig240=',
-    useKey: false}
-  simulationPath: ./MySims
-  submissionScript: !sgescript {MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
-    inputPath: '', logPath: '', memoryMax: '100', nbProcs: '4', parallel: false, postProcessPart: '',
-    preProcessPart: '', simName: simulation, system: SGE, timeLimit: '23:59:59'}
-Local machine: !localmachine
+Local machine: &id001 !localmachine
   abinitPath: ''
   gatewayConnect: null
   name: Local machine
   remoteConnect: null
   simulationPath: ./MySims
-  submissionScript: !frontendscript {MPIPath: mpirun, abinitPath: '', email: '', inputPath: '',
-    logPath: '', memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '',
-    preProcessPart: '', simName: simulation, system: Frontend, timeLimit: ''}
+  submissionScript: !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: bash execBS.sh 0 tbener 1,
+    email: '', inputPath: /dev/null, logPath: TB_simu_BD.log, memoryMax: '', nbProcs: '1',
+    parallel: false, postProcessPart: '', preProcessPart: cd ./Tight-Binding_src/BS,
+    simName: simulation, system: Frontend, timeLimit: ''}
+  submissionSystem: !submissionfrontendsystem
+    machine: *id001
+Lemaitre2: &id002 !remotemachine
+  abinitPath: ''
+  gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: '', login: fabreu,
+    password: !password '6i2NGjig240=', useKey: false}
+  name: Lemaitre2
+  remoteConnect: !connectioninfo {host: lemaitre2.cism.ucl.ac.be, keyPath: /home/flavio/.ssh/id_rsa_ceci,
+    login: flavio, password: !password '6i2NGjig240=', useKey: true}
+  simulationPath: ./MySims
+  submissionScript: !slurmscript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
+    inputPath: '', logPath: '', memoryMax: '2000', nbProcs: '2', parallel: true, postProcessPart: '',
+    preProcessPart: '', simName: simulation, system: SLURM, timeLimit: '23:59:59'}
+  submissionSystem: !submissionslurmsystem
+    machine: *id002
+Manneback: &id003 !gatewaymachine
+  abinitPath: ''
+  gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: '', login: ygillet,
+    password: !password 'RzJzYxJ76Dwmzuo4awRSPQ==', useKey: false}
+  name: Manneback
+  remoteConnect: !connectioninfo {host: manneback.cism.ucl.ac.be, keyPath: '', login: ygillet,
+    password: !password 'RzJzYxJ76Dwmzuo4awRSPQ==', useKey: false}
+  simulationPath: ./MySims
+  submissionScript: !slurmscript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: abinitgui@gmail.com,
+    inputPath: '', logPath: '', memoryMax: '100', nbProcs: '4', parallel: false, postProcessPart: '',
+    preProcessPart: '', simName: simulation, system: SLURM, timeLimit: '23:59:59'}
+  submissionSystem: !submissionslurmsystem
+    machine: *id003
+Green: &id004 !gatewaymachine
+  abinitPath: ''
+  gatewayConnect: !connectioninfo {host: hall.cism.ucl.ac.be, keyPath: '', login: tuto05,
+    password: !password 'AcGpp2bFImZDghMH5vEFWw==', useKey: false}
+  name: Green
+  remoteConnect: !connectioninfo {host: green.cism.ucl.ac.be, keyPath: '', login: tuto05,
+    password: !password 'AcGpp2bFImZDghMH5vEFWw==', useKey: false}
+  simulationPath: ./MySims
+  submissionScript: !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: '',
+    email: '', inputPath: '', logPath: '', memoryMax: '', nbProcs: '1', parallel: false,
+    postProcessPart: '', preProcessPart: '', simName: simulation, system: Frontend,
+    timeLimit: ''}
+  submissionSystem: !submissionfrontendsystem
+    machine: *id004
 

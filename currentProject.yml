@@ -1,40 +1,171 @@
-!!projects.Project
-PSPPath: ./PSP/
+!!abinitgui.projects.Project
+PSPPath: ./PSP
 dict:
-  Test3: !simulation
+  clustep simu: !clustepsimulation
+    inputFileName: ./ClustepEx/Seance1/ex1/C2-input
+    job: !remotejob {jobId: 0, machineName: null, script: null, status: 0, statusString: Ready}
+    name: clustep simu
+    positionFileName: ./ClustepEx/Seance1/ex1/C2-pos
+    remoteJob: !remotejob
+      jobId: -1
+      machineName: Green
+      script: !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: '', email: yannick.gillet@uclouvain.be,
+        inputPath: '', logPath: '', memoryMax: '200', nbProcs: '1', parallel: false,
+        postProcessPart: '', preProcessPart: '', simName: simulation, system: Frontend,
+        timeLimit: '02:00:00'}
+      status: 0
+      statusString: Ready
+    script: null
+    sendClustepSources: true
+  TB simu: !!abinitgui.mdtb.TightBindingSimulationOld
     inputFileName: ./test3.in
-    listPseudos:
-    - {PSPFileName: 14si.pspnc, PSPPath: ./PSP//LDA_TM.psps/14, PSPType: LDA_TM, name: '',
-      symbol: Si, typat: 0, znucl: 14}
-    name: Test3
-    remoteJob:
-      machineName: Manneback
-      script: !slurmscript {MPIPath: mpirun, abinitPath: /home/naps/ygillet/NAPS/src/gmatteo-7.5.4-private/tmp_intel13/src/98_main/abinit,
-        email: yannick.gillet@uclouvain.be, inputPath: /home/users/y/g/ygillet/MySims/test3.files,
-        logPath: /home/users/y/g/ygillet/MySims/logfiles/test3.log, memoryMax: '100',
-        nbProcs: '4', parallel: true, postProcessPart: '', preProcessPart: source /home/naps/ygillet/SetEnv.sh intel13_intel,
-        simName: simulation, system: SLURM, timeLimit: '23:59:59'}
+    job: !remotejob {jobId: 0, machineName: null, script: null, status: 0, statusString: Ready}
+    l: 4
+    m: 4
+    model: 2
+    name: TB simu
+    nkpt: 20
+    remoteJob: !remotejob
+      jobId: 0
+      machineName: green
+      script: &id001 !sgescript {CDPart: cd ./MySims/Tight-Binding, MPIPath: mpirun,
+        abinitPath: bash run_TB.sh 4 4 2 20, email: flavio@flavio.be, inputPath: /dev/null,
+        logPath: TB_simu.log, memoryMax: '200', nbProcs: '1', parallel: false, postProcessPart: '',
+        preProcessPart: '', simName: simulation, system: SGE, timeLimit: '1'}
       status: 0
-    status: 0
+      statusString: Ready
+    script: *id001
+  Tbase1_1: !abinitsimulation
+    inputFileName: /home/yannick/abinit/7.7.2-private/tests/tutorial/Input/tbase1_1.in
+    job: &id002 !remotejob
+      jobId: 2087086
+      machineName: Green
+      script: &id003 !sgescript
+        CDPart: ''
+        MPIPath: mpirun
+        abinitPath: abinit
+        email: yanikou19@gmail.com
+        inputPath: /home/users/y/g/ygillet/MySims/tbase1_1.files
+        logPath: /home/users/y/g/ygillet/MySims/logfiles/tbase1_1.log
+        memoryMax: '1000'
+        nbProcs: '16'
+        parallel: true
+        postProcessPart: ''
+        preProcessPart: |-
+          . /usr/local/intel/composerxe/mkl/bin/mklvars.sh intel64
+
+          module purge
+          module load shared
+          module load sge/6.2u5
+          module load cluster-tools/3.1
+          module load gcc/4.8.1
+          module load intel/clusterstudio/2013.0.028
+          module load intel/clusterstudio/compiler/13.0.1.117
+          #module load intel/clusterstudio/impi/4.1.0p-024
+          # Equivalent to
+          export INTEL_LICENSE_FILE=/opt/flexlm
+          export PATH=/usr/local/intel/ics_2013.0.028/impi/4.1.0.024/bin64:$PATH
+          export MANPATH=/usr/local/intel/ics_2013.0.028/impi/4.1.0.024/man:$MANPATH
+          export PATH=/usr/local/intel/ics_2013.0.028/impi/4.1.0.024/intel64/bin:$PATH
+          export LD_LIBRARY_PATH=/usr/local/intel/ics_2013.0.028/impi/4.1.0.024/intel64/lib:$LD_LIBRARY_PATH
+
+          export PATH=/home/naps/ygillet/MAPR2451-2014/abinit/bin:$PATH
+          export PATH=/home/naps/ygillet/MAPR2451-2014/tb/bin:$PATH
+        simName: simulation
+        system: SGE
+        timeLimit: 02:00:00
+      status: 0
+      statusString: Ready
+    listPseudos:
+    - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/NC_LDA_GTH/H, PSPType: NC_LDA_GTH,
+      name: Hydrogen, symbol: H, typat: 0, znucl: 1}
+    name: Tbase1_1
+    remoteJob: *id002
+    script: *id003
     usingExtInputFile: true
-  Test1: !simulation
-    inputFileName: ./test1.in
-    listPseudos:
-    - {PSPFileName: 41-Nb.LDA.fhi, PSPPath: ./PSP//LDA_FHI, PSPType: LDA_FHI, name: '',
-      symbol: Nb, typat: 0, znucl: 41}
-    - {PSPFileName: 03-Li.LDA.fhi, PSPPath: ./PSP//LDA_FHI, PSPType: LDA_FHI, name: '',
-      symbol: Li, typat: 0, znucl: 3}
-    - {PSPFileName: 08-O.LDA.fhi, PSPPath: ./PSP/LDA_FHI, PSPType: LDA_FHI, name: '',
-      symbol: O, typat: 0, znucl: 8}
-    name: Test1
-    remoteJob:
-      machineName: Manneback
-      script: !slurmscript {MPIPath: mpirun, abinitPath: /home/naps/ygillet/NAPS/src/gmatteo-7.5.4-private/tmp_intel13/src/98_main/abinit,
-        email: yannick.gillet@uclouvain.be, inputPath: /home/users/y/g/ygillet/MySims/test1.files,
-        logPath: /home/users/y/g/ygillet/MySims/logfiles/test1.log, memoryMax: '100',
-        nbProcs: '4', parallel: true, postProcessPart: '', preProcessPart: source /home/naps/ygillet/SetEnv.sh intel13_intel,
-        simName: simulation, system: SLURM, timeLimit: '23:59:59'}
+  Tbase1_2: !abinitsimulation
+    inputFileName: ./test3.in
+    job: &id004 !remotejob
+      jobId: 2087135
+      machineName: green
+      script: &id005 !sgescript {CDPart: '', MPIPath: mpirun, abinitPath: /home/naps/ygillet/MAPR2451-2014/abinit/bin/abinit,
+        email: flavio@flavio.be, inputPath: /home/users/f/a/fabreu/MySims/test3.files,
+        logPath: /home/users/f/a/fabreu/MySims/logfiles/test3.log, memoryMax: '200',
+        nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '', simName: simulation,
+        system: SGE, timeLimit: '1'}
       status: 0
-    status: 0
+      statusString: Ready
+    listPseudos:
+    - {PSPFileName: 14si.phoney.mod, PSPPath: ./PSP/NC_LDA_Teter/Si, PSPType: NC_LDA_Teter,
+      name: '', symbol: Si, typat: 0, znucl: 14}
+    name: Tbase1_2
+    remoteJob: *id004
+    script: *id005
+    usingExtInputFile: true
+  Tbase1_3: !abinitsimulation
+    inputFileName: C:/Users/Yannick/Downloads/abinit-7.6.2/tests/tutorial/Input/tbase1_3.in
+    job: &id006 !remotejob
+      jobId: -1
+      machineName: Green
+      script: &id007 !frontendscript {CDPart: '', MPIPath: mpirun, abinitPath: abinit,
+        email: '', inputPath: /home/users/t/u/tuto05/MySims/tbase4_5.files, logPath: /home/users/t/u/tuto05/MySims/logfiles/tbase4_5.log,
+        memoryMax: '', nbProcs: '1', parallel: false, postProcessPart: '', preProcessPart: '',
+        simName: simulation, system: Frontend, timeLimit: ''}
+      status: 0
+      statusString: Ready
+    listPseudos:
+    - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
+      symbol: H, typat: 0, znucl: 1}
+    name: Tbase1_3
+    remoteJob: *id006
+    script: null
+    usingExtInputFile: true
+  Tbase1_4: !abinitsimulation
+    inputFileName: C:/Users/Yannick/Downloads/abinit-7.6.2/tests/tutorial/Input/tbase1_4.in
+    job: &id008 !remotejob
+      jobId: -1
+      machineName: Green
+      script: *id007
+      status: 0
+      statusString: Ready
+    listPseudos:
+    - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
+      symbol: H, typat: 0, znucl: 1}
+    name: Tbase1_4
+    remoteJob: *id008
+    script: null
+    usingExtInputFile: true
+  Tbase1_5: !abinitsimulation
+    inputFileName: C:/Users/Yannick/Downloads/abinit-7.6.2/tests/tutorial/Input/tbase1_5.in
+    job: &id009 !remotejob
+      jobId: -1
+      machineName: Green
+      script: *id007
+      status: 0
+      statusString: Ready
+    listPseudos:
+    - {PSPFileName: 01h.pspgth, PSPPath: ./PSP/LDA_GTH, PSPType: LDA_GTH, name: Hydrogen,
+      symbol: H, typat: 0, znucl: 1}
+    name: Tbase1_5
+    remoteJob: *id009
+    script: null
+    usingExtInputFile: true
+  Others: !abinitsimulation
+    inputFileName: /home/yannick/abinit/7.7.2-private/tests/tutorial/Input/tbase4_5.in
+    job: &id010 !remotejob
+      jobId: -1
+      machineName: Green
+      script: !sgescript {CDPart: '', MPIPath: mpirun, abinitPath: abinit, email: '',
+        inputPath: /home/users/t/u/tuto05/MySims/tbase4_5.files, logPath: /home/users/t/u/tuto05/MySims/logfiles/tbase4_5.log,
+        memoryMax: '200', nbProcs: '1', parallel: true, postProcessPart: '', preProcessPart: '',
+        simName: simulation, system: SGE, timeLimit: '00:10:00'}
+      status: 0
+      statusString: Ready
+    listPseudos:
+    - {PSPFileName: 13al.pspnc, PSPPath: ./PSP/LDA_TM.psps/13, PSPType: LDA_TM, name: '',
+      symbol: Al, typat: 0, znucl: 13}
+    name: Others
+    remoteJob: *id010
+    script: null
     usingExtInputFile: true
 
