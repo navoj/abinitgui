@@ -1,0 +1,375 @@
+\documentclass{elsart}
+\usepackage{graphicx}
+
+%% YG
+
+
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{hyperref}
+%% END YG
+
+%\bibliographystyle{cpc}
+
+%opening
+\journal{Computer Physics Communications}
+
+%% This list environment is used for the references in the
+%% Program Summary
+%%
+\newcounter{bla}
+\newenvironment{refnummer}{%
+\list{[\arabic{bla}]}%
+{\usecounter{bla}%
+ \setlength{\itemindent}{0pt}%
+ \setlength{\topsep}{0pt}%
+ \setlength{\itemsep}{0pt}%
+ \setlength{\labelsep}{2pt}%
+ \setlength{\listparindent}{0pt}%
+ \settowidth{\labelwidth}{[9]}%
+ \setlength{\leftmargin}{\labelwidth}%
+ \addtolength{\leftmargin}{\labelsep}%
+ \setlength{\rightmargin}{0pt}}}
+ {\endlist}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Recent developments of the ABINIT software package}
+
+\author[Louvain,ETSF]{X. Gonze}
+\author[Bruyeres]{B. Amadon}
+\author[Louvain,ETSF]{J.-M. Beuken}
+\author[ThunderBay]{A. Bokhanchuk}
+\author[Saclay]{F. Bruneval}
+\author[Bruyeres]{G. Geneste}
+\author[Louvain,ETSF]{M. Giantomassi}
+\author[Louvain,ETSF]{Y. Gillet}
+\author[Bruyeres]{F. Jollet$^{\star}$}
+\ead{francois.jollet@cea.fr}
+\author[Louvain,ETSF]{J. Laflamme}
+\author[Louvain,ETSF]{A. Lherbier}
+\author[Bruyeres]{A. Martin}
+\author[Louvain,ETSF]{S. Ponc\'e}
+\author[SanSebastian]{Y. Pouillon}
+\author[Louvain,ETSF]{G.-M. Rignanese}
+\author[Bruyeres]{M. Torrent}
+\author[Louvain,ETSF]{B. Van Troeye}
+\author[Liege]{M. Verstraete}
+\author[Dalhousie]{J. Zwanziger}
+
+\address[Louvain]{Universit\'e Catholique de Louvain, Louvain-la-Neuve (Belgium)}
+\address[ETSF]{European Theoretical Spectroscopy Facility (ETSF)}
+\address[Bruyeres]{CEA DAM-DIF, F-91297 Arpajon, France}
+\address[Dalhousie]{Department of Chemistry and Institure for Research in Materials, Dalhousie University, Halifax, Canada}
+\address[Liege]{Theoretical Physics of Materials, University of Li\`ege}
+\address[Saclay]{CEA, DEN,Service de Recherches de M\'etallurgie Physique, F-91191 Gif-sur Yvette, France}
+\address[SanSebastian]{Euskal Herriko Unibertsitatea \& Materials Evolution, Donostia-San Sebastian, Spain}
+\address[ThunderBay]{Thunder Bay Regional Research Institute, 980 Oliver Road, Thunder Bay, Ontario, Canada P7B 6V4}
+
+
+\begin{abstract}
+
+ABINIT is a package whose main program allows one to find the total energy, charge density and electronic structure of systems made of electrons and nuclei (molecules and periodic solids) within Density Functional Theory (DFT) and Many-Body Perturbation Theory. ABINIT also allows to optimize the geometry according to the DFT forces and stresses, to perform molecular dynamics simulations using these forces, to generate dynamical matrices, Born effective charges, and dielectric tensors. \\
+The present paper aims at describing the new capabilities of ABINIT that have been developed since 2009. It covers both physical and technical developments inside the ABINIT code, as well as developments provided within the ABINIT package. The developments are described with relevant references, input variables, tests and tutorials.
+
+\begin{flushleft}
+PACS: 70; 71.15.Mb; 78
+\end{flushleft}
+
+\begin{keyword}
+first-principles calculation, electronic structure, density functional theory, Many-Body perturbation theory
+\end{keyword}
+
+\end{abstract}
+\end{frontmatter}
+
+{\bf Program summary}
+
+\begin{small}
+\noindent
+{\em Program Title:} ABINIT                                  \\
+{\em Journal Reference:}                                       \\
+  %Leave blank, supplied by Elsevier.
+{\em Catalogue identifier:}                                    \\
+  %Leave blank, supplied by Elsevier.
+{\em Licensing provisions:} GPL [1]                           \\
+{\em Program summary URL:} http://www.abinit.org/about \\
+{\em Programming language:} Fortran2003, PERL scripts, Python scripts     \\
+{\em Distribution format:} tar.gz                              \\
+{\em Keywords:}  first-principles calculation, electronic structure, density functional theory, Many-Body perturbation theory\\
+{\em PACS:} 70; 71.15.-m; 77; 78                             \\
+  % see http://www.aip.org/pacs/pacs.html 
+{\em Classification:} 7.3  Electronic Structure, 7.8 Structure and lattice dynamics \\
+  %Classify using CPC Program Library Subject Index, see (
+  % http://cpc.cs.qub.ac.uk/subjectIndex/SUBJECT_index.html)
+{\em External routines/libraries:}(all optional) BigDFT[2], ETSF$\_$IO[3], libxc [4], NetCDF [5], MPI [6], Wannier90[7].  \\
+
+{\em Nature of problem:} \\
+  This package has the purpose of computing accurately material and nanostructure properties : 
+  electronic structure, bond lengths, bond angles, primitive
+  cell size, cohesive energy, dielectric properties, vibrational properties, elastic properties, optical properties, 
+  magnetic properties, non-linear couplings, electronic and vibrational lifetimes,  ...
+   \\
+{\em Solution method:}\\
+  Software application based on Density Functional Theory and Many-Body Perturbation Theory, pseudopotentials, with plane waves or wavelets as basis functions.
+   \\
+{\em References:}
+\begin{refnummer}
+\item http://www.gnu.org/copyleft/gpl.txt
+\item http://inac.cea.fr/L$\_$Sim/BigDFT
+\item http://etsf.eu/index.php?page=standardization
+\item http://www.tddft.org/programs/octopus/wiki/index.php/Libxc
+\item http://www.unidata.ucar.edu/software/netcdf
+\item http://en.wikipedia.org/wiki/Message$\_$Passing$\_$Interface
+\item http://www.wannier.org
+\end{refnummer}
+
+\end{small}
+
+\newpage
+
+\section{Introduction}
+
+
+The ABINIT software project aims at providing the total energy, charge density and electronic structure of systems made of electrons and nuclei (molecules and periodic solids) thanks to a "first-principle" approach, i.e. without adjustable parameters. The ground state properties are calculated in the frame of the Density-Functional Theory (DFT) as proposed by Hohenberg and Kohn \cite{Hohenberg64} and Kohn and Sham \cite{Kohn65}, whereas the GW approximation (GWA) proposed by Hedin \cite{Hedin65} is used for exited states.
+
+
+The ABINIT project started in 1997 and the first publicly available version of ABINIT was released in December 2000 under the GNU GPL \cite{GNU}. It has already been described in 2002 \cite{Gonze02}, 2005  \cite{Gonze05} and 2009 \cite{Gonze09}. The last stable version of the package (7.10.4) has now a 70 MBytes size, consisting in nearly 1400 files written in F90 (830000 lines) and including documentation, tutorials and more than one thousand tests. The code is developed by an always opened community (around fifty people) and it is used by more than a thousand individuals worldwide. \\
+
+The aim of this paper is to describe the new capabilities than have been developed since 2009, the date of the last general paper on ABINIT \cite{Gonze09}:\\
+- Section 2 is devoted to a brief recall of the capabilities of ABINIT already present in 2009, as well as the structure of the package, and how to run the code. \\
+- In section 3, we shall detail the new physical features developed in the code these last 6 years. We shall focus on major developments and just mention the other ones. This will include the quantum effects for the nuclei, the developments made in the ground state calculations (finite electric fields and two component DFT), the developments made in linear and non-linear responses (linear response in a Projector Augmented-Wave approach (PAW) and electron-phonon interactions) and the developments made in excited state calculations (Bethe Salpeter Equation (BSE) , Dynamical Mean Field Theory (DMFT) and temperature dependence of the gap) .\\
+- In section 4, recently developed technical features will be described, particularly the advances concerning the development of a PAW approach for a wavelets basis, the parallelisation of the code and the build system.\\
+- New developments concerning the ABINIT package will be presented in section 5, especially for which concerns the tests, the test farm and the tutorials.\\
+- At the end, on-going developments that will be included in the next version of the package, will be rapidly presented in section 6.\\
+
+In each section, a brief presentation of the underlying theory of the new feature will be made, followed by the input variables to activate, references and tests and tutorials if any. 
+
+
+
+\newpage
+
+\section{Overview of ABINIT}
+
+(should be really shorter than the previous paper)
+
+\subsection{Capabilities of ABINIT}
+
+(to be filled - FJollet - one or two paragraphs)
+
+\subsection{Structure of the main ABINIT program}
+
+(to be filled - XGonze - one or two paragraphs)
+
+\subsection{Structure of the package}
+(to be filled - XGonze - one or two paragraphs)
+
+\subsection{How to build ABINIT}
+(to be filled - XGonze - one or two paragraphs)
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Recently developed physical features in ABINIT}
+
+%Begin GGeneste
+\subsection{Path-Integral Molecular Dynamics}
+
+
+
+
+Path-Integral Molecular Dynamics (PIMD) is a technique allowing to simulate the quantum fluctuations of the nuclei
+at thermodynamic equilibrium~\cite{Marx96}. It is implemented in ABINIT in the NVT ensemble since v7.8.2.
+
+%description
+In the Path-Integral formalism of quantum statistical mechanics, the (quantum) nuclei are replaced by a set of images (beads) treated by the means of classical mechanics, and interacting with each other through a specific effective potential. In the limit where the number of beads is infinite, the quantum system and its classical equivalent have the same partition function, and thus the same static observables. In PIMD, the classical system of beads is simulated by classical Molecular Dynamics. The PIMD equations of motion are integrated by using the Verlet algorithm.
+At each time step, a ground state DFT calculation is performed for each image.
+PIMD can be used with any XC functional. 
+PIMD can used in the PAW framework as well as in the norm-conserving case.
+
+
+%details: 
+PIMD in ABINIT follows the set of numerical schemes developed by several authors in the 90's~\cite{Marx96,Tuckerman96}. 
+PIMD in the canonical ensemble needs specific thermostats to ensure that the trajectories are ergodic:
+the Nose-Hoover chains are implemented, as well as the Langevin thermostat (controlled by the value of {\bf imgmov}).
+Also, it is possible to use coordinate transformations (staging and normal mode), that are controlled by the keyword {\bf pitransform}.
+In equilibrium PIMD, only static observables are relevant (quantum time-correlation functions are not accessible): the
+masses associated to the motion of the beads are controlled by the keyword {\bf pimass}, whereas the true masses of the atoms
+are given by {\bf amu}. The values given in {\bf pimass} are used to fix the so-called fictitious masses~\cite{Marx96}. In the case
+where a coordinate transformation is used, the fictitious masses are automatically fixed in the code to match the so-called
+staging masses or normal mode masses. 
+The number of time steps of the trajectory is controlled by {\bf ntimimage}, the initial and thermostat temperature by {\bf mdtemp(2)}.
+Except if specified, the images in the initial configuration are assumed to be at the same position, and a random distribution
+of velocities is applied (governed by {\bf mdtemp(1)}) to start the dynamics.
+
+
+At each time step, ABINIT delivers in the output file: \\
+(i) information about the DFT calculation of the ground state for each image \\
+(ii) the instantaneous temperature, the instantaneous energy as given by 
+the primitive and virial estimators, and the pressure tensor as given by the primitive estimator.\\
+An automatic test is given with the code ({\tt tests/v7/t08.in}) and a tutorial will be provided in the next version of the package.
+
+%parallelism
+PIMD in ABINIT enters a larger family of algorithms that use images of the system (controlled by the keyword {\bf imgmov}), such as String method or Nudged Elastic Band. The number of images (keyword {\bf nimage}) is associated to a specific parallelization level (keyword {\bf npimage}).
+
+
+%examples
+PIMD has been used with ABINIT to reproduce the large isotope effect on the phase transition between phase I and phase II of
+dense hydrogen~\cite{Geneste12}, and also some aspects of the diffusion of protons at low and room temperature in
+proton-conducting oxides for fuel cells~\cite{Geneste15}.
+
+
+%End GGeneste
+
+\subsection{Developments in ground state calculations}
+
+%Begin JZwanziger
+\subsubsection{ Finite Electric field}
+(to be filled - JZwanziger - one or two pages including background, brief description references + related input variables, automatic tests and tutorial if any)
+%End JZwanziger
+
+%Begin MTorrent
+\subsubsection{Two component DFT }
+(to be filled - MTorrent - one or two pages including background, brief description references + related input variables, automatic tests and tutorial if any)
+%End MTorrent
+
+\subsubsection{other developments}
+Meta-GGA, ELK (ALherbier),STS-STM, Constrained magnetism (MVertraete), random stopping power (FBruneval), Charged cells (FBruneval)
+(to be filled -  - one or two paragraphs including background, brief description references + related input variables, automatic tests and tutorial if any)
+ 
+
+\subsection{Developments in linear and non-linear responses}
+
+%Begin MTorrent
+\subsubsection{DFPT+PAW  }
+(to be filled - M. Torrent - one or two pages including background, brief description references + related input variables, automatic tests and tutorial if any)
+%End MTorrent
+
+%Begin MVerstraete
+\subsubsection{Electron-phonon }
+(to be filled - MVerstraete - one or two pages including background, brief description references + related input variables, automatic tests and tutorial if any)
+%End MVertraete
+
+%Begin 
+\subsubsection{other developments}
+DDK perturbation (JZwanziger),Raman+DFPT (XGonze)
+(to be filled -  - one or two paragraphs including background, brief description references + related input variables, automatic tests and tutorial if any)
+%End 
+
+\subsection{Developments in excited state calculations}
+
+%Begin MGiantomassi
+\subsubsection{BSE}
+(to be filled - MGiantomassi - one or two pages including background, brief description references + related input variables, automatic tests and tutorial if any)
+%End MGiantomassi
+
+%Begin BAmadon
+\subsubsection{DMFT, U calculation  }
+(to be filled - BAmadon - one or two pages including background, brief description references + related input variables, automatic tests and tutorial if any)
+%End BAmadon
+
+%Begin Sponc\'e
+\subsubsection{Temperature dependence of the gap}
+(to be filled - SPonc\'e - one or two pages including background, brief description references + related input variables, automatic tests and tutorial if any)
+%End Sponc\'e
+
+\subsubsection{other developments}
+RPA (FBruneval)
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Recently developed technical features in ABINIT}
+
+%Begin MTorrent
+\subsection{Wavelets + PAW }
+(to be filled - M. Torrent - one or two pages including background, brief description references + related input variables, automatic tests and tutorial if any)
+%End MTorrent
+
+%Begin MTorrent
+\subsection{parallelisation }
+(to be filled - MTorrent - one or two pages including background, brief description references + related input variables, automatic tests and tutorial if any)
+%End MTorrent
+
+%Begin YPouillon
+\subsection{Build system }
+(to be filled - YPouillon- one or two page including background, brief description references + related input variables, automatic tests and tutorial if any)
+%End YPouillon
+
+%Begin 
+\subsection{other developments}
+Parallelisation cleaning (FJollet), code beautification (XGonze), GGA kernels from libxc (GMRignanese),Use of images(MTorrent)
+(to be filled -  - one or two paragraphs including background, brief description references + related input variables, automatic tests and tutorial if any)
+%End 
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Developments provided within the ABINIT package}
+
+%Begin XGonze+JMBeuken
+\subsection{Tests, Test farm, tutorial}
+(to be filled - XGonze+JMBeuken - one or two page including background, brief description references + related input variables, automatic tests and tutorial if any)
+%End XGonze+JMBeuken
+
+%Begin 
+\subsection{other developments}
+ 
+\subsubsection {PAW atomic datasets}
+In the Projector Augmented Wave (PAW) method developed by Bl\"{o}chl (1994) \cite{Bloechl94}, a PAW data file is needed for each element, taking the role of the pseudopotential file used with the norm-conserving  or ultra-soft formalisms.
+We have developed a new set of PAW atomic data files for most of the stable 
+elements in the periodic table \cite{Jollet14}. They have been generated thanks 
+to the ATOMPAW generator \cite{Holzwarth01}. These files are provided in a 
+standard XML format for use in any PAW electronic structure code, following the 
+specifications given in \cite{XML}. The new datasets are available on the ABINIT 
+web site \cite{web3} for the first 86 elements. They perform well as measured by 
+the ``$\Delta$'' evaluation criterion introduced by Lejaeghere {\em{et al.}} 
+(2014)\cite{Lejaeghere14} ($\Delta=0.4 meV$), and also performs well in a 
+modified evaluation scheme proposed in \cite{Jollet14} ($\Delta_{1}=1.3 meV$).\\
+
+GUI (YGillet), APPA (AMartin+MTorrent)
+(to be filled -  - one or two paragraphs including background, brief description references + related input variables, automatic tests and tutorial if any)
+
+\input{GUI}
+
+%End 
+\newpage
+\section{On-going developments}
+
+Pseudos NC (MGiantomassi), Abipy (MGiantomassi),
+Van der Waals DF (YPouillon?),Van der Waals DFT-D3, including phonons (B. Van Troeye),
+Accurate effective masses from DFPT (JLaflamme),
+Interpolation technique for BSE (YGillet),
+Unfolding the band structure of supercells with fold2Bloch (ABokhanchuk)
+
+\input{BSEInterp}
+
+... to be completed
+
+(to be filled -  - one or two paragraphs including background, brief description references + related input variables, automatic tests and tutorial if any)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusions}
+
+
+
+\section{Acknowledgments}
+
+\appendix
+\label{appendix}
+%Begin MTorrent,FJollet
+\section{The projector-augmented wave method  }
+(to be filled - MTorrent,FJollet: general things to avoid repetitions in the former subsections )
+%End MTorrent,FJollet
+
+% Reference section 
+\bibliographystyle{unsrt}
+\bibliography{ABINIT15}
+
+
+
+\end{document}
+

@@ -1,0 +1,35 @@
+Human beings are usually involved in several tasks of Computational Physics 
+from the writing of an input file to the final analysis of the results. As an 
+important part of these tasks are done on remote high-performance 
+computing centers, many of them are repetitive and time consuming.
+AbinitGUI has been developed to help users to run the calculations in a more 
+user-friendly environment and to automatize many repetitive tasks.
+
+AbinitGUI allows people to work on a set of different machines, either locally 
+or remotely. On top of the connection setup in the backend, the GUI provides a 
+complete SSH terminal as well as a SFTP frame. Then, the typical steps of a 
+calculation, i.e. pre-processing, actual running and analyzis of results, can 
+be achieved with the help of graphical tools. In the pre-processing 
+step, the input file is written inside the editor and then tested and 
+analyzed thanks to an automatic parser generated from the YML documentation 
+(\textcolor{red}{Presented in section ...}). The structure associated with 
+each dataset can then be viewed in the embedded JMOL 
+panel(\textcolor{red}{CITATION}).
+As a second step, the user edits the configuration for the remote job 
+management system and launches the job, all the files being automatically 
+generated and submitted to the remote system.
+Finally the user can tackle the analysis of the results through a 
+set of post-processing scripts shared with the GUI, containing i.e. band 
+structure plotters and links to the Python Library ``Abipy'' 
+(\textcolor{red}{Presented in section ...}). 
+A minimalistic interface is also provided to monitor the jobs (get 
+current status, kill a specific job, ...).
+
+\textcolor{red}{One should add a picture}
+
+This project is developed in Java to be cross-platform and therefore does not 
+require any installation. As the size of the package grew with time, the 
+developers decided to extract the development from the main Abinit package and 
+hosted the package on (\url{http://github.com/abinitgui/abinitgui}). A website 
+has also been designed : \url{http://gui.abinit.org}, it contains the last 
+stable version as well as documentation and supplementary information.

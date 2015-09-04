@@ -1,0 +1,23 @@
+The accurate description of the dielectric function of crystal materials
+requires state-of-the-art methodologies. The Bethe-Salpeter Equation (BSE) is
+one of these techniques in the framework of the Many-Body Perturbation Theory,
+including quasi-particles energies obtained from GW corrections and
+electron-hole interaction (excitonic effects)~\cite{Onida2002}.
+However, convergence of the dielectric properties reveals to be cumbersome as it 
+requires a large number of wavevectors in the Brillouin Zone.
+
+Therefore numerical techniques can be used to improve the convergence rate.
+Rohlfing \& Louie~\cite{Rohlfing2000} developed a double-grid technique where 
+the matrix elements of the BSE hamiltonian evaluated on a coarse grid are 
+interpolated towards a denser grid. This allows to get at a lower price an 
+approximation of the dielectric function on the dense grid.
+In the spirit of this technique, we have generalized the
+approach allowing for multilinear interpolation and designed 
+efficient algorithms based on Lanczos-Haydock method~\cite{Gillet2015}.
+Different schemes are also proposed in order to allow fine-tuning of the 
+accuracy-computational load trade-off.
+
+These new interpolation schemes are available in Abinit with the 
+\texttt{bs\_interp\_*}
+input variables and tests of these techniques are available in
+\texttt{v67mbpt/t30-35}.
