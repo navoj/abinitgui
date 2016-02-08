@@ -80,6 +80,8 @@ public class SLURMScript extends AbstractSubmissionScript {
         } else {
             fileContent += abinitPath + " < " + inputPath + " >& " + logPath;
         }
+        
+        fileContent += "\n";
 
         fileContent += postProcessPart
                 + "\n";
