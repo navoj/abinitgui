@@ -156,7 +156,6 @@ public class SubmissionSLURMSystem extends SubmissionSystem
 
     @Override
     public void updateStatus(RemoteJob rj) {
-        System.out.println("updating Status !");
         int status = UNKNOWN;
         if(rj.getJobId() == -1) 
         {
@@ -178,7 +177,6 @@ public class SubmissionSLURMSystem extends SubmissionSystem
             
             try{
                 int id = Integer.parseInt(idS);
-                System.out.println("tab = "+idS+", "+statS);
                 if(rj.getJobId() == id)
                 {
                     rj.setStatusString(statS);
@@ -202,8 +200,6 @@ public class SubmissionSLURMSystem extends SubmissionSystem
                 rj.setStatusString(statusS);
             }
         }
-        
-        System.out.println("rj.status = "+rj.getStatusString());
     }
 
     @Override
