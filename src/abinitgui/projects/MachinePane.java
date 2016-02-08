@@ -243,15 +243,20 @@ public class MachinePane extends JPanel {
                 }
 
                 this.machine.setSubmissionScript(submissionScriptPanel1.getScript());
-                if(this.machine.getSubmissionScript().getSystem().equals("SGE"))
+                String curSystem = this.machine.getSubmissionScript().getSystem();
+                if(curSystem == null)
+                {
+                    this.machine.setSubmissionSystem(null);
+                }
+                else if(curSystem.equals("SGE"))
                 {
                     this.machine.setSubmissionSystem(new SubmissionSGESystem(this.machine));
                 }
-                else if(this.machine.getSubmissionScript().getSystem().equals("SLURM"))
+                else if(curSystem.equals("SLURM"))
                 {
                     this.machine.setSubmissionSystem(new SubmissionSLURMSystem(this.machine));
                 }
-                else if(this.machine.getSubmissionScript().getSystem().equals("Frontend"))
+                else if(curSystem.equals("Frontend"))
                 {
                     this.machine.setSubmissionSystem(new SubmissionFrontendSystem(this.machine));
                 }
