@@ -1956,46 +1956,6 @@
     - '[[BETHE_SALPETER]]'
     commentdefault: null
     commentdims: null
-    defaultval: 1.0
-    definition: Bethe-Salpeter INTERPolation Method3 WIDTH
-    dimensions: null
-    excludes: null
-    requires: '[[bs_interp_mode]]==3 and [[bs_algorithm]]==2'
-    section: vardev
-    text: |-
-        Defines the width of the region where divergence treatment is applied for BSE interpolation
-    varname: bs_interp_m3_width
-    vartype: real
-- !variable
-    characteristics:
-    - '[[BETHE_SALPETER]]'
-    commentdefault: null
-    commentdims: null
-    defaultval: 0
-    definition: Bethe-Salpeter INTERPolation METHOD
-    dimensions: null
-    excludes: null
-    requires: '[[bs_interp_mode]] > 0 and [[bs_algorithm]]==2'
-    section: vardev
-    text: |-
-        <p>
-         [[bs_interp_method]] selects the method of interpolation:
-         <ul>
-          <li>
-           0 =&gt; Interpolate using Y. Gillet technique with 8 neighbours
-          </li>
-          <li>
-           1 =&gt; Interpolation using Rohlfing & Louie technique (missing reference)
-          </li>
-         </ul>
-        </p>
-    varname: bs_interp_method
-    vartype: integer
-- !variable
-    characteristics:
-    - '[[BETHE_SALPETER]]'
-    commentdefault: null
-    commentdims: null
     defaultval: 0
     definition: Bethe-Salpeter INTERPolation MODE
     dimensions: scalar
@@ -2039,22 +1999,6 @@
         It generates the decomposition of BSR in a,b,c coefficients used for the interpolation.
         </p>
     varname: bs_interp_prep
-    vartype: integer
-- !variable
-    characteristics:
-    - '[[BETHE_SALPETER]]'
-    commentdefault: null
-    commentdims: null
-    defaultval: 1
-    definition: Bethe-Salpeter INTERPolation Rohlfing & Louie NeighBour
-    dimensions: null
-    excludes: null
-    requires: '[[bs_interp_mode]] > 0 and [[bs_algorithm]]==2 and [[bs_interp_method]]
-        == 1'
-    section: vardev
-    text: |-
-        Gives the index of the neighbour that is used for Rohlfing & Louie
-    varname: bs_interp_rl_nb
     vartype: integer
 - !variable
     characteristics:
@@ -2476,8 +2420,14 @@
            <b>
             User defined
            </b>
-           - The user can also define their own grid using the variables [[cd_customnimfrqs]]
-           and [[cd_imfrqs]]
+           - The user can also define their own grid using the variables
+           <a href="vargw.html#nfreqim">
+            cd_customnimfrqs
+           </a>
+           and
+           <a href="vargw.html#nfreqim">
+            cd_imfrqs
+           </a>
            .
            <i>
             With great power comes great responsibility!
@@ -2810,7 +2760,10 @@
          <ul>
           <li>
            (1) The k point grid is non-symmetric, in case
-           [[kptopt]] =1, 2, or 4 ;
+           <a href="varbas.html#nsym">
+            kptopt
+           </a>
+           =1, 2, or 4 ;
           </li>
           <li>
            (2) The non-symmorphic translation part of the symmetry operations has components that are not zero,
@@ -3270,7 +3223,8 @@
          When K-&gt;0 , it tends to the macroscopic dielectric
         constant, eventually divided by the mixing factor [[diemix]]
         (or
-         [[diemixmag]]
+         <a href="vargs.html#diemix">
+          diemixmag
          </a>
          for magnetization).
          <br />
@@ -3401,7 +3355,10 @@
         <p>
          Gives overall factor of the preconditioned
         residual magnetization/magnetic field to be transferred in the SCF cycle (see
-         [[diemix]] for further information).
+         <a href="vargs.html#diemixmag">
+          diemix
+         </a>
+         for further information).
          <br />
          For the time being, apply only when the SCF mixing is done on the density
         ([[iscf]]&gt;=10).
@@ -3518,7 +3475,9 @@
          Restriction: In order to use dmatpawu, [[lpawu]] must be identical for all atom types (or -1).
          <br />
          The occupation matrix is in the basis of real spherical harmonics Slm (note that this differs from the choice made when
-         [[prtdosm]]=1
+         <a href="varfil.html#prtdosm">
+          prtdosm=1
+         </a>
          , that is in the basis of complex spherical harmonics).
         Their are ordered by increasing m, and are defined e.g. in
         the article
@@ -3738,8 +3697,7 @@
     section: vardev
     text: |-
         If 1, enable the calculation of the entropy  within the DMFT framework and so allows the calculation of the total energy (free energy).
-        In the current implementation, this is only possible with [[dmft_solv]]=5 (Continuous Time Quantum Monte Carlo).
-        See also the input variable [[dmft_nlambda]].
+        In the current implementation, this is only possible with <a href="vardev.html#dmft_solv">dmft_solv</a>=5 (Continuous Time Quantum Monte Carlo).
     varname: dmft_entropy
     vartype: integer
 - !variable
@@ -3890,7 +3848,7 @@
     - '[[DEVELOP]]'
     commentdefault: null
     commentdims: null
-    defaultval: 5
+    defaultval: 0
     definition: 'Dynamical Mean Fied Theory: choice of SOLVer'
     dimensions: scalar
     excludes: null
@@ -3911,33 +3869,18 @@
            2=&gt; Hubbard one solver. The Hubbard one solver is an approximation which gives a rough description of correlated Mott insulators. It should not be used for metals.
           </li>
           <li>
-           5=&gt; Use the Continuous Time Quantum Monte Carlo (CTQMC) solver CT-Hyb of ABINIT (Hybridization expansion as published in
+           5=&gt; Continuous Time Quantum Monte Carlo (CTQMC) solver CT-Hyb (Hybridization expansion as published in
            <a href="http://journals.aps.org/prl/abstract/10.1103/PhysRevLett.97.076405">
             Phys. Rev. Lett 97, 076405, (2006)
            </a>
-           ) in the density density representation,
+           ) in the density density representation and without Spin Orbit Coupling.
         CTQMC calculations are much more time consuming that Hubbard I calculations. Nevertheless, the calculation if fully parallelised.
-          </li>
-          <li>
-           6=&gt; Continuous Time Quantum Monte Carlo (CTQMC) solver CT-Hyb of TRIQS (Hybridization expansion as published in
-           <a href="http://journals.aps.org/prl/abstract/10.1103/PhysRevLett.97.076405">
-            Phys. Rev. Lett 97, 076405, (2006)
-           </a>
-           ) in the density density representation.
-          </li>
-          <li>
-           7=&gt; Continuous Time Quantum Monte Carlo (CTQMC) solver CT-Hyb of TRIQS (Hybridization expansion as published in
-           <a href="http://journals.aps.org/prl/abstract/10.1103/PhysRevLett.97.076405">
-            Phys. Rev. Lett 97, 076405, (2006)
-           </a>
-           ) with the rotationaly invariant formulation.
           </li>
          </ul>
          <br />
          WARNING: CT-QMC should be used for correlated metals. Even if correlated (Mott) insulators, QMC is expected to be much more precise: Hubbard one is an approximation !
          <br />
          See the usefull variables for CT-QMC solver :
-        [[dmftctqmc_basis]],
         [[dmftctqmc_check]],
         [[dmftctqmc_correl]],
         [[dmftctqmc_gmove]],
@@ -3948,7 +3891,10 @@
         [[dmftctqmc_order]],
         [[dmftqmc_l]],
         [[dmftqmc_n]],
-        [[dmftqmc_seed]],
+         <a href="vardev.html#dmftqmc_therm">
+          dmftqmc_seed
+         </a>
+         ,
         [[dmftqmc_therm]]
         </p>
     varname: dmft_solv
@@ -4049,38 +3995,6 @@
          (Introduced by B. Amadon, v6.1.0)
         </p>
     varname: dmftcheck
-    vartype: integer
-- !variable
-    characteristics:
-    - '[[DEVELOP]]'
-    commentdefault: null
-    commentdims: null
-    defaultval: 1
-    definition: 'Dynamical Mean Fied Theory: Continuous Time Quantum Monte
-        Carlo basis'
-    dimensions: scalar
-    excludes: null
-    requires: '[[dmft_solv]]==5'
-    section: vardev
-    text: |-
-        <p>
-         <br />
-         Choose the basis to perform CTQMC calculation.
-         <ul>
-          <li>
-           0=&gt;  Use the local basis in the spherical harmonics basis. Can be useful if the hamiltonian has weak off diagonal terms
-           and for this reason, one want to keep the original basis for simplicity and for physical insight.
-          </li>
-          <li>
-           1=&gt;  Default value, diagonalize the local hamiltonian (but only if it is not diagonal). The best choice in general.
-          </li>
-          <li>
-           2=&gt;  Diagonalise the local correlated occupation matrix. Can lead to non diagonal hamiltonian that
-           cannot be handled by CTQMC. This option should be thus avoided.
-          </li>
-         </ul>
-        </p>
-    varname: dmftctqmc_basis
     vartype: integer
 - !variable
     characteristics:
@@ -4834,80 +4748,6 @@
 - !variable
     characteristics:
     - '[[RESPFN]]'
-    commentdefault: null
-    commentdims: null
-    defaultval: The full range of band available in the calculation for each k-point.
-    definition: EFfective MASs, BANDS to be trated.
-    dimensions:
-    - 2
-    - '[[nkpt]]'
-    excludes: null
-    requires: '[[efmas]]==1'
-    section: varrf
-    text: |-
-        <p>
-        This variable controls the range of bands for which the effective mass is to be calculated.
-        If a band is degenerate, all other bands of the degenerate group will automatically be treated,
-        even if they were not part of the user specified range.
-        </p>
-    varname: efmas_bands
-    vartype: integer
-- !variable
-    characteristics:
-    - '[[RESPFN]]'
-    commentdefault: null
-    commentdims: null
-    defaultval: 3
-    definition: EFfective MASs, DIMension of the effective mass tensor
-    dimensions: scalar
-    excludes: null
-    requires: '[[efmas]]==1'
-    section: varrf
-    text: |-
-        <p>
-        For 2D or 1D systems, the band dispersion goes to 0 perpendicular to the system,
-        which causes the inverse effective mass to be singular, i.e. the effective mass
-        to be NaN. This keyword circumvents the problem by eliminating the troublesome dimensions
-        from the inverse effective mass.
-        </p>
-
-        <p>
-        In 2D, the Z axis is ignored and, in 1D, the Z and Y axis are ignored.
-        </p>
-
-        <p>
-        Also, note that in the 2D degenerate case, a subtlety arises: the 'transport equivatlent'
-        effective mass does not determine the scale of the transport tensors (conductivity and others).
-        Therefore, for this specific case, the factor by which these transport tensors should be scaled
-        once determined from the 'transport equivatlent' effective mass tensor is output separately on
-        the line immediately after the effective mass.
-        </p>
-    varname: efmas_dim
-    vartype: integer
-- !variable
-    characteristics:
-    - '[[RESPFN]]'
-    commentdefault: null
-    commentdims: null
-    defaultval: 1000
-    definition: EFfective MASs, Number of points for integration w/r to THETA
-    dimensions: scalar
-    excludes: null
-    requires: '[[efmas]]==1 and [[efmas_band]]==(degenerate band index)'
-    section: varrf
-    text: |-
-        <p>
-        When a band is degenerate, the usual definition of effective mass becomes invalid.
-        However, it is still possible to define a 'transport equivalent mass tensor' that
-        reproduces the contribution of the band to the conductivity tensor.
-        To obtain this tensor, an integration over the solid sphere is required.
-        The default value gives a tensor accurate to the 4th decimal in Ge.
-        </p>
-    varname: efmas_ntheta
-    vartype: integer
-- !variable
-    characteristics:
-    - '[[RESPFN]]'
     - '[[ENERGY]]'
     commentdefault: null
     commentdims: null
@@ -5644,7 +5484,7 @@
     characteristics: null
     commentdefault: null
     commentdims: null
-    defaultval: 0.001
+    defaultval: 0.0010
     definition: internal FRICTION coefficient
     dimensions: scalar
     excludes: null
@@ -5923,7 +5763,11 @@
         or for non linear RF calculations (to get mixed higher order derivatives you need several perturbed
         densities and wave functions).
         Indicate the files from which first-order densities must be obtained,
-        in multi-dataset mode (in single dataset mode, use [[ird1den]]).
+        in multi-dataset mode (in single dataset mode, use
+        <a href="varfil.html#irdden">
+          ird1den
+        </a>
+        ).
          <br />
          NOTE : a negative value of a "get" variable indicates the number of datasets to go backwards;
         it is not the number to be subtracted from the current dataset to find the proper dataset.
@@ -5950,7 +5794,19 @@
          Eventually used when [[ndtset]]&gt;0
         (in the multi-dataset mode), to indicate
         starting wavefunctions, as an alternative to [[irdwfk]],
-        [[irdwfq]], [[ird1wf]], [[irdddk]]. One should first read the
+         <a href="varfil.html#irdwfk">
+          irdwfq
+         </a>
+         ,
+         <a href="varfil.html#irdwfk">
+          ird1wf
+         </a>
+         ,
+        or
+         <a href="varfil.html#irdwfk">
+          irdddk
+         </a>
+         . One should first read the
         explanations given for these latter variables.
          <br />
          The
@@ -6189,56 +6045,6 @@
     commentdefault: null
     commentdims: null
     defaultval: 0
-    definition: GET the DDB from ...
-    dimensions: scalar
-    excludes: null
-    requires: null
-    section: varfil
-    text: |-
-        <p>
-        This variable should be used when performing electron-phonon
-        or temperature-dependence calculations.
-        The Born effective charge
-        as well as the dielectric tensor will be read from a previous
-        DFPT calculations of the electric field at q=Gamma.
-
-        The use of this variable will trigger the cancellation of a
-        residual dipole that leads to an unphysical divergence of the
-        GKK with vanishing q-points.
-
-        The use of this variable greatly improves the k-point convergence
-        speed as the density of the k-point grid required to obtain the
-        fulfillment of the charge neutrality sum rule is usually prohibitively
-        large.
-
-         <br />
-         If [[getddb]]==0, no such use of previously computed Born effective charge
-         and dielectric tensor is done.
-         <br />
-         If [[getddb]] is positive, its value gives the index of the dataset
-        from which the output density is to be used as input.
-         <br />
-         If [[getddb]] is -1, the output density of the previous dataset
-        must be taken, which is a frequently occuring case.
-         <br />
-         If [[getddb]] is a negative number, it indicates the number
-        of datasets to go backward to find the needed file.
-         <br />
-         NOTE : a negative value of a "get" variable indicates the number of datasets to go backwards;
-        it is not the number to be subtracted from the current dataset to find the proper dataset.
-        As an example :
-         <pre>
-          ndtset 3   jdtset 1 2 4  getXXX -1
-         </pre>
-         refers to dataset 2 when dataset 4 is initialized.
-        </p>
-    varname: getddb
-    vartype: integer
-- !variable
-    characteristics: null
-    commentdefault: null
-    commentdims: null
-    defaultval: 0
     definition: GET the ddk wavefunctions from _1WF file
     dimensions: scalar
     excludes: null
@@ -6248,8 +6054,20 @@
         <p>
          Eventually used when [[ndtset]]&gt;0
         (in the multi-dataset mode), to indicate
-        starting wavefunctions, as an alternative to [[irdwfk]],[[irdwfq]],[[ird1wf]],[[irdddk]].
-         One should first read the
+        starting wavefunctions, as an alternative to [[irdwfk]],
+         <a href="varfil.html#irdwfk">
+          irdwfq
+         </a>
+         ,
+         <a href="varfil.html#irdwfk">
+          ird1wf
+         </a>
+         ,
+        or
+         <a href="varfil.html#irdwfk">
+          irdddk
+         </a>
+         . One should first read the
         explanations given for these latter variables.
          <br />
          The
@@ -6772,8 +6590,20 @@
         <p>
          Eventually used when [[ndtset]]&gt;0
         (in the multi-dataset mode), to indicate
-        starting wavefunctions, as an alternative to [[irdwfk]],[[irdwfq]],[[ird1wf]], or [[irdddk]].
-         One should first read the
+        starting wavefunctions, as an alternative to [[irdwfk]],
+         <a href="varfil.html#irdwfk">
+          irdwfq
+         </a>
+         ,
+         <a href="varfil.html#irdwfk">
+          ird1wf
+         </a>
+         ,
+        or
+         <a href="varfil.html#irdwfk">
+          irdddk
+         </a>
+         . One should first read the
         explanations given for these latter variables.
          <br />
          The [[getwfk]],
@@ -6955,8 +6785,20 @@
         <p>
          Eventually used when [[ndtset]]&gt;0
         (in the multi-dataset mode), to indicate
-        starting wavefunctions, as an alternative to [[irdwfk]],[[irdwfq]],[[ird1wf]] or [[irdddk]].
-         One should first read the
+        starting wavefunctions, as an alternative to [[irdwfk]],
+         <a href="varfil.html#irdwfk">
+          irdwfq
+         </a>
+         ,
+         <a href="varfil.html#irdwfk">
+          ird1wf
+         </a>
+         ,
+        or
+         <a href="varfil.html#irdwfk">
+          irdddk
+         </a>
+         . One should first read the
         explanations given for these latter variables.
          <br />
          The
@@ -7232,41 +7074,6 @@
     characteristics: null
     commentdefault: null
     commentdims: null
-    defaultval:
-    - -1
-    - -1
-    - -1
-    - -1
-    - -1
-    definition: 'GPU: choice of DEVICES on one node'
-    dimensions:
-    - 5
-    excludes: null
-    requires: null
-    section: varpar
-    text: |-
-        <p>
-         Only relevant if [[use_gpu_cuda]]=1, that is, if ABINIT is used with CUDA functionality.
-         <br />
-         <br />
-         To be used when several GPU devices are present on each node, assuming the same number of devices on all nodes.
-        <br />
-         Allows to choose in which order the GPU devices are choosen and distributed among MPI processes (see examples below). When the default value (-1) is set, the GPU devices are choosen by order of performance (FLOPS, memory).
-        <br /><br />
-        Examples:
-        <ul>
-        <li>2 GPU devices per node, 4 MPI processes per node,  <b>gpu_device</b>=[-1,-1,-1,-1,-1] (default):<br />MPI processes 0 and 2 use the best GPU card, MPI processes 1 and 3 use the slowest GPU card.</li>
-        <li>3 GPU devices per node, 5 MPI processes per node,  <b>gpu_device</b>=[1,0,2,-1,-1]:<br />MPI processes 0 and 3 use GPU card 1, MPI processes 1  and 4 use GPU card 0, MPI process 2 uses GPU card 2.</li>
-        <li>3 GPU devices per node, 5 MPI processes per node,  <b>gpu_device</b>=[0,1,-1,-1,-1]:<br />MPI processes 0, 2 and 4 use GPU card 0, MPI processes 1 and 3 use GPU card 1;  the 3rd GPU card is not used.</li>
-        </ul>
-        GPU card are numbered starting from 0; to get the GPU devices list, type "nvidia-smi" or "lspci | grep -i nvidia".
-        </p>
-    varname: gpu_devices
-    vartype: integer
-- !variable
-    characteristics: null
-    commentdefault: null
-    commentdims: null
     defaultval: 2000000
     definition: 'GPU (Cuda): LINear ALGebra LIMIT'
     dimensions: scalar
@@ -7413,7 +7220,8 @@
     commentdims: null
     defaultval: !range
         start: 1
-        stop: '[[gw_customnfreqsp]]'
+        stop:
+        - '[[gw_customnfreqsp]]'
     definition: GW SPectral FREQuencies
     dimensions:
     - '[[gw_customnfreqsp]]'
@@ -7525,7 +7333,10 @@
          is the
         plasma frequency (default can be overridden by setting [[ppmfrq]]).
         The equidistant grid in z is determined uniquely by
-        [[nfreqre]] ) and
+         <a href="vargw.html#nfreqim">
+          nfreqre
+         </a>
+         ) and
         the points are distributed so that half of them lie below the plasma frequency. This is useful in
         conjuction with [[gw_frqim_inzgrid]] if one needs to use a grid
         which maps
@@ -7572,7 +7383,13 @@
         proportional to tan(x). This makes the grid approximately linear to start with, with a rapid increase
         towards the end. Also, this is the grid which gives equal importance to each point used in the integration
         of a function which decays as 1/x^2. To be used in conjuction with [[nfreqre]],
-        [[cd_max_freq]] and [[cd_halfway_freq]]
+         <a href="vargw.html#cd_max_freq">
+          cd max_freq
+         </a>
+         and
+         <a href="vargw.html#cd_halfway_freq">
+          cd halfway_freq
+         </a>
          which determine the parameters of the transformed grid.
         </p>
     varname: gw_frqre_tangrid
@@ -7723,10 +7540,16 @@
         so that all the degenerate states are included.
 
         Note also that [[kptgw]], and
-         [[bdgw]]
+         <a href='vargw.html#bdgw"'>
+          bdgw
+         </a>
          are ignored when this options is used.
         If you want to select manually the list of k-points and bands, you have
-        to provide the three variables [[nkptgw]], [[kptgw]], and [[bdgw]].
+        to provide the three variables [[nkptgw]], [[kptgw]], and
+         <a href='vargw.html#bdgw"'>
+          bdgw
+         </a>
+         .
         </p>
     varname: gw_qprange
     vartype: integer
@@ -8017,7 +7840,7 @@
     varname: gwgamma
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8035,7 +7858,7 @@
     varname: gwls_band_index
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8055,22 +7878,22 @@
         <li> [[gwls_correlation]] == 2 : GWLS calculation WITHOUT the dielectric model and WITHOUT the shift Lanczos technique, </li>
         <li> [[gwls_correlation]] == 3 : GWLS calculation WITH the dielectric model and WITH the shift Lanczos technique, </li>
         <li> [[gwls_correlation]] == 4 : GWLS calculation WITHOUT the dielectric model and WITH the shift Lanczos technique, </li>
-        <li> [[gwls_correlation]] == 5 : Not a GWLS calculation; just calculate and print the eigenvalues of the (static) dielectric matrix (for debugging purposes). </li>
+        <li> [[gwls_correlation]] == 5 : Not a GWLS calculation; just calculate and print the eigenvalues of the (static) dielectric matrix (for debugging purposes). </li> 
         </ul>
         </p>
         <p>
-        The default, ([[gwls_correlation]] == 3), is the most performant option and should be kept by the user.
-        Option 1, 2 and 5 are deprecated and will be removed.
+        The default, ([[gwls_correlation]] == 3), is the most performant option and should be kept by the user. 
+        Option 1, 2 and 5 are deprecated and will be removed. 
         </p>
     varname: gwls_correlation
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
     defaultval: 2
-    definition: GWLS dielectric model
+    definition: GWLS dielectric model 
     dimensions: scalar
     excludes: null
     requires: '[[optdriver]]==66'
@@ -8080,7 +7903,7 @@
     varname: gwls_dielectric_model
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8097,7 +7920,7 @@
     varname: gwls_exchange
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8122,7 +7945,7 @@
     varname: gwls_first_seed
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8140,7 +7963,7 @@
     varname: gwls_kmax_analytic
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8152,10 +7975,10 @@
     section: vargw
     text: |-
         <p>
-        The G0W0 formalism involves the calculation of a summation conceptually linked to the trace of the dielectric matrix (see eq. (38) of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>).
+        The G0W0 formalism involves the calculation of a summation conceptually linked to the trace of the dielectric matrix (see eq. (38) of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>). 
         Since the eigenvalues spectrum of the dielectric matrix of formed by a few large discrete eigenvalues and an integrable divergence in the density of eigenvalues around 0, it is expensive to sample accurately this divergence using the exact dielectric operator.
         It this becomes interesting to calculate the 'trace' of the 'exact - model' dielectric matrix in a small basis and add it to the 'trace' of the 'model' dielectric matrix obtained in a large bais.
-        In the context where the model dielectric matrix is used in the calculations, [[gwls_sternheimer_kmax]] determines the size of the 'small' basis and [[gwls_kmax_complement]] determines the size of the 'large' basis.
+        In the context where the model dielectric matrix is used in the calculations, [[gwls_sternheimer_kmax]] determines the size of the 'small' basis and [[gwls_kmax_complement]] determines the size of the 'large' basis. 
         </p>
         <p>
         For more information on the exact role of these bases and on the model dielectric operator used, see section V of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>.
@@ -8163,7 +7986,7 @@
     varname: gwls_kmax_complement
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8181,7 +8004,7 @@
     varname: gwls_kmax_numeric
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8194,9 +8017,9 @@
     text: |-
         <p>
         The contour deformation technique, in the G0W0 context, will involve the calculation of pole residues associated to states lying between the one corrected ([[gwls_band_index]]) and the fermi level.
-        These residues take the form of a matrix element of the inverse dielectric matrix at a real frequency (see eq. (11) of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>).
-        Therefore, the dielectric matrix must be constructed in some basis at these frequencies and inverted to calculate the matrix element.
-        The present input variable sets the size of the Lanczos basis to be constructed for this purpose.
+        These residues take the form of a matrix element of the inverse dielectric matrix at a real frequency (see eq. (11) of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>). 
+        Therefore, the dielectric matrix must be constructed in some basis at these frequencies and inverted to calculate the matrix element. 
+        The present input variable sets the size of the Lanczos basis to be constructed for this purpose. 
         The default value has proven to be very robust for many molecular systems and should therefore be left to the default value by the user.
         </p>
         <p>
@@ -8205,25 +8028,25 @@
     varname: gwls_kmax_poles
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
     defaultval: '*0.0'
     definition: GWLS LIST of the PROJection FREQuencies
-    dimensions:
+    dimensions: 
     - '[[gwls_n_proj_freq]]'
     excludes: null
     requires: '[[optdriver]]==66'
     section: vargw
     text: |-
-        This variable sets the frequencies to be used to construct the basis in which the hamiltonian is projected to accelerate the solution of the Sternheimer equations involved by the construction of the dielectric matrix at finite frequencies.
+        This variable sets the frequencies to be used to construct the basis in which the hamiltonian is projected to accelerate the solution of the Sternheimer equations involved by the construction of the dielectric matrix at finite frequencies. 
         See section VI of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>.
         For most cases, since the frequencies \Infty and (if [[gwls_recycle]]>0) 0.0 are used at no computational cost, [[gwls_n_proj_freq]]==0 (which means no ADDITIONAL frequency is to be used) is fine and no frequencies need to be picked up.
     varname: gwls_list_proj_freq
     vartype: real
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     - '[[ENERGY]]'
     commentdefault: ''
@@ -8236,37 +8059,20 @@
     section: vargw
     text: |-
         <p>
-        This is the width of the lorentzian, in Ha, used to model the frequency dependence of the dielectric matrix in the GWLS calculation (see eqs. (12), (13), (14), (15), (16) and (34) of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>).
+        This is the width of the lorentzian, in Ha, used to model the frequency dependence of the dielectric matrix in the GWLS calculation (see eqs. (12), (13), (14), (15), (16) and (34) of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>). 
         More precisely, this parameter is the value of \alpha used in eq. (34).
-        This model is then used to separate the integration over frequencies into a 'model' part (second term of eq. (12)) and a 'exact - model' part (first term of eq. (12)).
+        This model is then used to separate the integration over frequencies into a 'model' part (second term of eq. (12)) and a 'exact - model' part (first term of eq. (12)). 
         Since the 'model' part can be integrated analytically (see eqs. (15), (16) and (34)), only the the 'exact - model' part needs to be integrated numerically.
         </p>
         <p>
-        The only effect of this model is therefore to alleviate the numerical cost of the integration over frequencies in the G0W0 calculation.
-        The value of the associated parameter has thus an impact on the convergence rate of the GWLS calculation with respect to the number of frequencies of integration ([[gwls_npt_gauss_quad]]), but no impact on the converged result of the GWLS calculation.
+        The only effect of this model is therefore to alleviate the numerical cost of the integration over frequencies in the G0W0 calculation. 
+        The value of the associated parameter has thus an impact on the convergence rate of the GWLS calculation with respect to the number of frequencies of integration ([[gwls_npt_gauss_quad]]), but no impact on the converged result of the GWLS calculation. 
         Typically, the default ([[gwls_model_parameter]]==1.0) is optimal.
         </p>
     varname: gwls_model_parameter
     vartype: real
 - !variable
-    characteristics:
-    - '[[GW]]'
-    commentdefault: ''
-    commentdims: ''
-    defaultval: 0
-    definition: GWLS Number of PROJection FREQuencies
-    dimensions: scalar
-    excludes: ''
-    requires: '[[optdriver]]==66'
-    section: vargw
-    text: |-
-        This variable sets the number of frequencies, on top of \Infty and (if [[gwls_recycle]]>0) 0.0, to be used for the construction of the basis in which the hamiltonian is projected to accelerate the solution of the Sternheimer equations involved in the construction of the dielectric matrix at finite frequencies.
-        See section VI of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>.
-        For most cases, the default ([[gwls_n_proj_freq]]==0) is fine.
-    varname: gwls_n_proj_freq
-    vartype: integer
-- !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8277,12 +8083,12 @@
     requires: '[[optdriver]]==66'
     section: vargw
     text: |-
-        This variable defines the number of points used for the numerical integration of the self-energy over frequencies in GWLS computations (see eq. (12) of  <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>).
+        This variable defines the number of points used for the numerical integration of the self-energy over frequencies in GWLS computations (see eq. (12) of  <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>). 
         The default is fine for most cases.
     varname: gwls_npt_gauss_quad
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8299,7 +8105,24 @@
     varname: gwls_nseeds
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
+    - '[[GW]]'
+    commentdefault: ''
+    commentdims: ''
+    defaultval: 0
+    definition: 'GWLS Number of PROJection FREQuencies'
+    dimensions: scalar
+    excludes: ''
+    requires: '[[optdriver]]==66'
+    section: vargw
+    text: |-
+        This variable sets the number of frequencies, on top of \Infty and (if [[gwls_recycle]]>0) 0.0, to be used for the construction of the basis in which the hamiltonian is projected to accelerate the solution of the Sternheimer equations involved in the construction of the dielectric matrix at finite frequencies. 
+        See section VI of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>.
+        For most cases, the default ([[gwls_n_proj_freq]]==0) is fine.
+    varname: gwls_n_proj_freq
+    vartype: integer
+- !variable
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8314,38 +8137,38 @@
     varname: gwls_print_debug
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
     defaultval: 2
-    definition: GWLS RECYCLE
+    definition: GWLS RECYCLE 
     dimensions: scalar
     excludes: null
     requires: '[[optdriver]]==66'
     section: vargw
     text: |-
         <p>
-        This variable let the user choose if and how he wants to recycle the solutions of the Sternheimer equations involved in the construction of the static dielectric matrix.
+        This variable let the user choose if and how he wants to recycle the solutions of the Sternheimer equations involved in the construction of the static dielectric matrix. 
         <ul>
         <li> [[gwls_recycle]]==0 : No recycling of the solutions </li>
         <li> [[gwls_recycle]]==1 : Recycle the solutions. To do so, store them in RAM. </li>
         <li> [[gwls_recycle]]==2 : Recycle the solutions. To do so, store them on disk. </li>
         </ul>
-        If the user choose to recycle the solutions, they are used to construct the basis in which the hamiltonian is projected for the solution of the Sternheimer equations involved by the calculation of the dielectric matrix at finite frequencies.
+        If the user choose to recycle the solutions, they are used to construct the basis in which the hamiltonian is projected for the solution of the Sternheimer equations involved by the calculation of the dielectric matrix at finite frequencies. 
         The other solutions used will be those at \omega \to \Infty (alwyas used) and those at \omega=[[gwls_list_proj_freq]].
         For more information of the basis constructed, see section IV of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>.
         </p>
         <p>
-        It is important to note that the solutions rapidly take much space to store.
+        It is important to note that the solutions rapidly take much space to store. 
         Therefore, it is often not possible to store them in RAM in production calculations, yet still desirable to retain them.
-        This is when it becomes interesting to store them on disk.
+        This is when it becomes interesting to store them on disk. 
         It is particularly efficient to choose the path of the file to be on disk space local to the processor in large MPI calculations, since each processor need only his own solutions in the construction of the basis.
         </p>
     varname: gwls_recycle
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     - '[[ENERGY]]'
     commentdefault: ''
@@ -8361,7 +8184,7 @@
     varname: gwls_second_model_parameter
     vartype: real
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: ''
     commentdims: ''
@@ -8372,12 +8195,12 @@
     requires: '[[optdriver]]==66'
     section: vargw
     text: |-
-        This variable sets the dimension of the dielectric matrix used in a GWLS calculation (see section IV of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>).
+        This variable sets the dimension of the dielectric matrix used in a GWLS calculation (see section IV of <a href="http://arxiv.org/abs/1408.3036v1">arXiv:1408.3036</a>). 
         Typically converged at a value of a few hundreds to a few thousands for a convergence criterion of 50meV on the  eigenenergies.
     varname: gwls_sternheimer_kmax
     vartype: integer
 - !variable
-    characteristics:
+    characteristics: 
     - '[[GW]]'
     commentdefault: null
     commentdims: null
@@ -8615,7 +8438,7 @@
     defaultval: null
     definition: Indices of AToms that are FIXed along the Y direction
     dimensions:
-    -   -   - natfixy
+    - '[[natfixy]]'
     excludes: null
     requires: '[[natfixy]] > 0'
     section: varrlx
@@ -8640,7 +8463,7 @@
     defaultval: null
     definition: Indices of AToms that are FIXed along the Z direction
     dimensions:
-    -   -   - natfixz
+    - '[[natfixz]]'
     excludes: null
     requires: '[[natfixz]] > 0'
     section: varrlx
@@ -8816,18 +8639,8 @@
          <br />
          If [[ieig2rf]] is set to 3, the second-order electronic eigenvalues will be calculated from the DFPT method (sum over states) but using a different part of the code. This is equivalent to [[ieig2rf]] = 1 [debuging]
          <br />
-         If [[ieig2rf]] is set to 4, the second-order electronic eigenvalues will be calculated from the dynamical DFPT method (Sternheimer).
-         The code will generate _EIGR2D.nc files that contain the electron-phonon matrix element squared on the space orthogonal to the active space.
-         The code will also produce _FAN.nc files that contain the electron-phonon matrix elements squared.
-         Note that [[ieig2rf]]=4 can only be used if Abinit is compiled with NETCDF support.
+         If [[ieig2rf]] is set to 4, the second-order electronic eigenvalues will be calculated from the dynamical DFPT method (Sternheimer). Note that [[ieig2rf]]=4 can only be used if Abinit is compiled with NETCDF support.
          <br />
-         If [[ieig2rf]] is set to 5, the second-order electronic eigenvalues will be calculated from the dynamical DFPT method (Sternheimer).
-         The code will generate _EIGR2D.nc files that contain the electron-phonon matrix element square on the space orthogonal to the active space.
-         The code will also produce _GKK.nc files that contain electron-phonon matrix elements.
-         This option is preferable for large system to [[ieig2rf]]=4 as the GKK files take less much less disk space and memory (but run a little bit slower).
-         Note that [[ieig2rf]]=5 can only be used if Abinit is compiled with NETCDF support.
-         <br />
-         Related variables : [[bdeigrf]],[[elph2_imagden]],[[getgam_eig2nkq]],[[smdelta]]
          Related variables : [[bdeigrf]],[[elph2_imagden]],[[getgam_eig2nkq]],[[smdelta]]
         </p>
     varname: ieig2rf
@@ -9834,8 +9647,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 0
         '[[iscf]] < 0': 1
+        defaultval: 0
     definition: Integer that governs the ReaDing of 1st-order DEN file
     dimensions: scalar
     excludes: null
@@ -9846,7 +9659,10 @@
         (for example in nonlinear optical response),
         use [[ird1den]]=1 to read first-order densities from _DENx files produced in
         other calculations. In multi-dataset mode use
-        [[get1den]].
+         <a href="varfil.html#getden">
+          get1den
+         </a>
+         .
         </p>
         When iscf &#60; 0, the reading of a DEN file is always enforced.
         </p>
@@ -10070,48 +9886,6 @@
     characteristics: null
     commentdefault: null
     commentdims: null
-    defaultval: !valuewithconditions
-        defaultval: 0
-        '[[iscf]] < 0': '1'
-    definition: Integer that governs the ReaDing of DDB file
-    dimensions: scalar
-    excludes: null
-    requires: null
-    section: varfil
-    text: |-
-        <p>
-        This variable should be used when performing electron-phonon
-        or temperature-dependence calculations.
-        The Born effective charge
-        as well as the dielectric tensor will be read from a previous
-        DFPT calculations of the electric field at q=Gamma.
-
-        The use of this variable will trigger the cancellation of a
-        residual dipole that leads to an unphysical divergence of the
-        GKK with vanishing q-points.
-
-        The use of this variable greatly improves the k-point convergence
-        speed as the density of the k-point grid required to obtain the
-        fulfillment of the charge neutrality sum rule is usually prohibitively
-        large.
-        </p>
-        <p>
-         A non-zero value of [[irdddb]] is treated in the same way
-        as other "ird" variables,
-        see the
-         <a href="../../users/abinit_help.html#4">
-          section 4
-         </a>
-         of abinit_help.
-         <br />
-         <br />
-        </p>
-    varname: irdddb
-    vartype: integer
-- !variable
-    characteristics: null
-    commentdefault: null
-    commentdims: null
     defaultval: 0
     definition: Integer that governs the ReaDing of DDK wavefunctions, in _1WF files
     dimensions: scalar
@@ -10265,8 +10039,8 @@
     commentdefault: null
     commentdims: null
     defaultval: !valuewithconditions
-        defaultval: 0
         '[[iscf]] < 0': '1'
+        defaultval: 0
     definition: Integer that governs the ReaDing of DEN file
     dimensions: scalar
     excludes: null
@@ -10325,7 +10099,10 @@
         [[getkss]].
          <br />
          When [[optdriver]]=3 or 4, at least one of
-        [[irdkss]] or [[getkss]]
+        [[irdkss]] or
+         <a href="varfil.html#getkss">
+          getscr
+         </a>
          must be non-zero.
         </p>
         <p>
@@ -10843,7 +10620,10 @@
            <br />
            ([[DEVELOP]] option, used with
         [[irdwfk]]=1 or
-           [[irdwfq]]=1)
+           <a href="varfil.html#irdwfk">
+            irdwfq
+           </a>
+           =1)
           </li>
           <li>
            =2 =&gt; SCF cycle, simple mixing of the potential
@@ -12850,12 +12630,23 @@
          For each k-point with number igwpt in the range (1:[[nkptgw]]),
         [[kptgw]](1,igwpt)
          is the reduced coordinate of the k-point where [[GW]] corrections are required.
-        while [[bdgw]] (1:2,igwpt) specifies the range of bands to be considered.
+        while
+         <a href='vargw.html#bdgw"'>
+          bdgw
+         </a>
+         (1:2,igwpt) specifies the range of bands to be considered.
         </p>
         <p>
          At present, not all k-points are possible. Only those corresponding to the k-point
         grid defined with the same repetition parameters (
-        [[kptrlatt]], or [[ngkpt]]
+         <a href="vargs.html#kptrlatt" target="kwimg">
+          kptrlatt
+         </a>
+         ,
+        or
+         <a href="varbas.html#ngkpt" target="kwimg">
+          ngkpt
+         </a>
          ) than the GS one, but WITHOUT any shift, are allowed.
         </p>
     varname: kptgw
@@ -13431,7 +13222,7 @@
     characteristics: null
     commentdefault: null
     commentdims: null
-    defaultval: 0.005
+    defaultval: 0.0050
     definition: MAXimum Electric field STEP
     dimensions: scalar
     excludes: null
@@ -14444,27 +14235,6 @@
     vartype: integer
 - !variable
     characteristics:
-    - '[[DEVELOP]]'
-    commentdefault: null
-    commentdims: null
-    defaultval: 0
-    definition: Norm-Conserving, use XC Core-Correction in G-space
-    dimensions: scalar
-    excludes: null
-    requires: null
-    section: vardev
-    text: |-
-        This variable is relevant only for norm-conserving calculations. Historically, Abinit treats the model core charge used for the non-linear core
-        correction in real space. Alternatively, it is possible to instruct the code to compute the core charge in G-space following the same approach used in
-        the PAW code. The G-space formalism is more accurate than the interpolation in real space, especially when derivatives of the model core charge are
-        needed, e.g. DFPT. Preliminary tests showed that the violation of the acoustic sum rule is reduced when nc_xccc_gspace==1 , especially for LDA. It's
-        worth stressing, however, that nc_xccc_gspace==1 should be used only in conjunction with NC pseudos whose model core charge that decays quickly in
-        G-space. Several NC pseudos available in the Abinit table are not optimized for the G-space formalism and users are strongly invited to perform
-        convergence studies with respect to ecut before using this option.
-    varname: nc_xccc_gspace
-    vartype: integer
-- !variable
-    characteristics:
     - '[[NO_MULTI]]'
     commentdefault: null
     commentdims: null
@@ -14597,7 +14367,8 @@
     section: vargs
     text: |-
         <p>
-        This variable defines the number of divisions used to sample the smallest segment of the circuit employed in a band structure calculations
+         Gives the number of divisions used to sample the smallest segment
+        of the circuit employed during a band structure calculation
         (see related input variables
         [[kptopt]]
         and
@@ -15167,31 +14938,13 @@
            [[acell]]
           </li>
           <li>
-           [[amu]]
-          </li>
-          <li>
            [[angdeg]]
-          </li>
-          <li>
-           [[dmatpawu]]
-          </li>
-          <li>
-           [[jpawu]]
-          </li>
-         <li>
-           [[mixalch]]
           </li>
           <li>
            [[rprim]]
           </li>
           <li>
-           [[upawu]]
-          </li>
-         <li>
            [[vel]]
-          </li>
-         <li>
-           [[vel_cell]]
           </li>
           <li>
            [[xangst]]
@@ -15205,36 +14958,55 @@
          </ul>
          These input variables, non-modified, will be used to define the image with index 1.
         For the image with the last index, the input file might specify the values
-        of such input variables, appended with "_lastimg", e.g. :
+        of such input variables, appended with "_lastimg", e.g. one of these :
          <ul>
           <li>
-            acell_lastimg
-          </li>
-           <li>
-            rprim_lastimg
-          </li>
-           <li>
-            xcart_lastimg
+            [[acell]]_lastimg
           </li>
           <li>
-            ...
+            [[angdeg]]_lastimg
           </li>
-          </ul>
+          <li>
+            [[rprim]]_lastimg
+          </li>
+          <li>
+           [[vel]]_lastimg
+          </li>
+          <li>
+            [[xangst]]_lastimg
+          </li>
+          <li>
+            [[xcart]]_lastimg
+          </li>
+          <li>
+           [[xred]]_lastimg
+           </a>
+          </li>
+         </ul>
          By default, these values will be interpolated linearly to define values for the other images, unless
         there exist specific values for some images, for which the string "last" has to be replaced by the
         index of the image, e.g. for the image number 4 :
          <ul>
           <li>
-            acell_4img
-          </li>
-           <li>
-            rprim_4img
-          </li>
-           <li>
-            xcart_4img
+            [[acell]]_4img
           </li>
           <li>
-           ...
+            [[angdeg]]_4img
+          </li>
+          <li>
+            [[rprim]]_4img
+          </li>
+          <li>
+            [[vel]]_4img
+          </li>
+          <li>
+            [[xangst]]_4img
+          </li>
+          <li>
+            [[xcart]]_4img
+          </li>
+          <li>
+            [[xred]]_4img
           </li>
          </ul>
          It is notably possible to specify the starting point and the end point of the path (of images), while specifying intermediate points.
@@ -16615,7 +16387,9 @@
          Gives the number of molecular dynamics time steps or
         Broyden
         structural optimization steps to be done if
-        [[ionmov]]
+         <a href="varrlx.html#ionmov">
+          ionmov
+         </a>
          is non-zero.
          <br />
          Note that at the present
@@ -16739,25 +16513,6 @@
         </p>
     varname: ntyppure
     vartype: integer
-- !variable
-    characteristics: null
-    commentdefault: null
-    commentdims: null
-    defaultval: 0.0
-    definition: NUClear DIPole MOMents
-    dimensions:
-    - 3
-    - '[[natom]]'
-    excludes: null
-    requires: '[[usepaw]] = 1; [[pawcpxocc]] = 2; [[kptopt]] > 2'
-    section: vargs
-    text: "Places an array of nuclear magnetic dipole moments on the atomic\
-        \ positions, useful for computing the magnetization in the presence\
-        \ of nuclear dipoles and thus the chemical shielding by the converse\
-        \ method. The presence of these dipoles breaks time reversal symmetry\
-        \ and lowers the overall spatial symmetry. "
-    varname: nucdipmom
-    vartype: real
 - !variable
     characteristics: null
     commentdefault: null
@@ -17247,7 +17002,7 @@
         value: 0
     definition: OCCupation numbers
     dimensions:
-    - '[[nband]]'
+    - "sum([[nband]])"
     excludes: null
     requires: null
     section: vargs
@@ -17329,7 +17084,11 @@
            [[occopt]]=2:
            <br />
            k points may optionally have different numbers of
-        bands and different occupancies.  [[nband]]([[nkpt]]*[[nsppol]]) is given
+        bands and different occupancies.  [[nband]](
+           <a href="varbas.html#nkpt">
+            nkpt
+           </a>
+           *[[nsppol]]) is given
         explicitly as an array of [[nkpt]]*[[nsppol]] elements.
         [[occ]]() is given explicitly for all bands at each k point,
         and eventually for each spin --
@@ -17480,34 +17239,11 @@
     requires: null
     section: varrlx
     text: |
-        Allows to optimize the unit cell shape and dimensions, when [[ionmov]]>=2 or 3.  The configuration for which the stress almost vanishes
-        is iteratively determined, by using the same algorithms as for the nuclei positions. Will eventually modify [[acell]]
-        and/or [[rprim]].  The ionic positions are ALWAYS updated, according to the forces.
-        A target stress tensor might be defined, see [[strtarget]].
-        <ul>
-          <li>[[optcell]]=0 : modify nuclear positions, since [[ionmov]]=2 or 3, but no cell shape and dimension optimisation.</li>
-          <li>[[optcell]]=1 : optimisation of volume only (do not modify [[rprim]], and allow an homogeneous dilatation of the three components of [[acell]])</li>
-          <li>[[optcell]]=2 : full optimization of cell geometry (modify [[acell]] and [[rprim]]
-               - normalize the vectors of [[rprim]] to generate the [[acell]]).
-               This is the usual mode for cell shape and volume optimization. It takes into account the symmetry of the system,
-               so that only the effectively relevant degrees of freedom are optimized.</li>
-          <li>[[optcell]]=3 : constant-volume optimization of cell geometry (modify [[acell]] and [[rprim]] under constraint
-               - normalize the vectors of [[rprim]] to generate the [[acell]])</li>
-          <li>[[optcell]]=4, 5 or 6 : optimize [[acell]](1), [[acell]](2), or [[acell]](3), respectively
-               (only works if the two other vectors are orthogonal to the optimized one, the latter being along its cartesian axis).</li>
-          <li>[[optcell]]=7, 8 or 9 : optimize the cell geometry while keeping the first, second or third vector unchanged
-               (only works if the two other vectors are orthogonal to the one left unchanged, the latter being along its cartesian axis).</li>
-        </ul>
-        A few details require attention when performing unit cell optimisation :
-        <ul>
-          <li> one has to get rid of the discontinuites due to discrete changes of plane wave number with cell size, by using a suitable value of [[ecutsm]];</li>
-          <li> one has to allow for the possibility of a larger sphere of plane waves, by using [[dilatmx]];</li>
-          <li> one might have to adjust the scale of stresses to the scale of forces, by using [[strfact]].</li>
-          <li> if all the reduced coordinates of atoms are fixed by symmetry, one cannot use [[toldff]] to stop the SCF cycle.
-              (Suggestion : use [[toldfe]] with a small value, like 1.0d-10)</li>
-        </ul>
-        It is STRONGLY suggested first to optimize the ionic positions without cell shape and size optimization ([[optcell]]=0), then start the cell shape and size optimization from the cell with relaxed ionic positions.
-        Presently (v3.1), one cannot restart ([[restartxf]])
+        Presently (v3.1), one cannot restart (
+        <a href="varrlx.html#restartxf">
+         restartxf
+        </a>
+        )
         a calculation with a non-zero [[optcell]] value from the
         (x,f) history of another run with a different non-zero [[optcell]]
         value. There
@@ -17647,6 +17383,25 @@
         for some PAW calculations.
         </p>
     varname: optstress
+    vartype: integer
+- !variable
+    characteristics: null
+    commentdefault: null
+    commentdims: null
+    defaultval: 0
+    definition: ORBital MAGnetization
+    dimensions: scalar
+    excludes: null
+    requires: '[[usepaw]]==1'
+    section: varpaw
+    text: |
+        <ul>
+         <li>
+          If set to 1, calculate the orbital magnetization. THIS CODE
+        IS UNDER DEVELOPMENT AND IS NOT READY FOR USE.
+         </li>
+        </ul>
+    varname: orbmag
     vartype: integer
 - !variable
     characteristics:
@@ -18093,7 +17848,11 @@
           pawmixdg=1
          </b>
          the density/potential is mixed in REAL space using the fine FFT grid
-        (defined by [[pawecutdg]] or [[ngfftdg]]).
+        (defined by
+         <a href="varpaw.html#">
+          pawecutdg
+         </a>
+         or [[ngfftdg]]).
          <br />
          - If
          <b>
@@ -18270,7 +18029,7 @@
          If [[pawoptosc]]=1 the matrix elements are computed with the expression given by Arnaud and Alouani in PRB 62. 4464
         The equation is exact provided that the set of PAW partial waves is complete.
          <br />
-         If [[pawoptosc]]=2  the matrix elements are computed with the approximated expression proposed by Shishkin and
+         If [[pawoptosc]]=2  the matrix elements are computed with the approaximated expression proposed by Shishkin and
         Kresse in PRB 74. 035101
         </p>
     varname: pawoptosc
@@ -19417,7 +19176,10 @@
          the default value calculated from the average electronic
         density per unit cell. This can affect the distribution of gridpoints along the imaginary and
         real frequency axes. See
-        [[cd_frqim_method]], [[gw_frqim_inzgrid]] and [[gw_frqre_inzgrid]] for more details.
+         <a href="vargw.html#cd_frqim_method">
+          gw_frqim_method
+         </a>
+         , [[gw_frqim_inzgrid]] and [[gw_frqre_inzgrid]] for more details.
         </p>
     varname: ppmfrq
     vartype: real
@@ -19524,7 +19286,13 @@
         of all the perturbations (all atoms in all directions) for the chosen set
         of (irreducible) q-points. To impose this and prevent ABINIT from using
         symmetry to reduce the number of perturbations, set [[prepgkk]] to 1.
-        Use in conjunction with [[prtgkk]].
+        Use in conjunction with
+         <a href="varfil.html#prtgkk">
+          <b>
+           prtgkk
+          </b>
+         </a>
+         .
         </p>
     varname: prepgkk
     vartype: integer
@@ -19583,8 +19351,11 @@
          This is an array of the numbers associated to the index atoms that
         the user want to print in the output or log files, this is useful when
         you have a large number of atoms and you are only interested to
-        follow specific atoms, the numbers associated should be consistent
-        with the list in [[xcart]] or [[xred]].
+        follow especific atoms, the numbers associated should be consistent
+        with the list in [[xcart]] or
+         <a href="varbas.html#xcart">
+          xred
+         </a>
          This input varible does not affect the contents of the "OUT.nc" or
         "HIST.nc", those are NetCDF files containing the information about
         all the atoms.
@@ -19624,7 +19395,9 @@
     text: |-
         <p>
          Print out geometry (_BLZTRP_GEOM) and eigenenergy (_BLZTRP_EIGEN) files for the
-         <a href="http://www.icams.de/content/departments/cmat/boltztrap/"> BoltzTraP code</a>
+         <a href="http://www.icams.de/content/departments/ams/madsen/boltztrap.html">
+          BoltzTraP code
+         </a>
          by Georg Madsen.
         </p>
     varname: prtbltztrp
@@ -19712,6 +19485,27 @@
          No output is provided by [[prtcml]] different from 1 or 2
         </p>
     varname: prtcml
+    vartype: integer
+- !variable
+    characteristics: null
+    commentdefault: null
+    commentdims: null
+    defaultval: 0
+    definition: PRinT Chemical Shielding
+    dimensions: scalar
+    excludes: null
+    requires: '[[usepaw]]==1'
+    section: varpaw
+    text: |-
+        <p>
+         <ul>
+          <li>
+           If set to 1, calculate the chemical shielding at each atomic site in the unit cell. THIS CODE
+        IS UNDER DEVELOPMENT AND IS NOT READY FOR USE.
+          </li>
+         </ul>
+        </p>
+    varname: prtcs
     vartype: integer
 - !variable
     characteristics: null
@@ -20276,24 +20070,6 @@
     characteristics: null
     commentdefault: null
     commentdims: null
-    defaultval: prtgsr = 0
-    definition: PRinT the GSR file
-    dimensions: scalar
-    excludes: null
-    requires: null
-    section: varfil
-    text: "If set to 1, ABINIT will produce a GSR file at the end of the GS\
-        \ calculation. The GSR file contains the most important GS results\
-        \ (band structure, forces, stresses, electronic density). The GSR\
-        \ file can be read by AbiPy and used for futher postprocessing.\n\n\
-        Note that, by default, the GSR file contains the electronic density\
-        \ unless [[prtden]] is set to 0  "
-    varname: prtgsr
-    vartype: integer
-- !variable
-    characteristics: null
-    commentdefault: null
-    commentdims: null
     defaultval: 0
     definition: PRinT the Kinetic energy DENsity
     dimensions: scalar
@@ -20372,11 +20148,6 @@
         the input [[kptrlen]]), and it is better
         to examine the full analysis for a given cell and set of symmetries,
         [[shiftk]] for all the production runs.
-        </p>
-
-        <p>
-        if set to -2, the code stops in invars1 after the computation of the irreducible set and
-        a file named kpts.nc with the list of the k-points and the corresponding weights is produced
         </p>
     varname: prtkpt
     vartype: integer
@@ -20507,21 +20278,6 @@
     commentdefault: null
     commentdims: null
     defaultval: 0
-    definition: PRint the PSPS file
-    dimensions: scalar
-    excludes: null
-    requires: null
-    section: varfil
-    text: |-
-        If set to 1, the code produces a netcdf file (PSPS.nc) with the internal tables used by Abinit to apply the pseudopotential part of the KS Hamiltonian. The data can be visualized with AbiPy.
-        if prtpsps is set to -1, the code will exit after the output of the PSPS.nc file.
-    varname: prtpsps
-    vartype: integer
-- !variable
-    characteristics: null
-    commentdefault: null
-    commentdims: null
-    defaultval: 0
     definition: PRinT the SPin CURrent density
     dimensions: scalar
     excludes: null
@@ -20530,7 +20286,12 @@
     text: |-
         <p>
          If set to 1  or a larger value, provide output of the current density of
-        different direction spins (x,y,z) in the whole unit cell. Should require spinorial wave functions [[nspinor]]
+        different direction spins (x,y,z) in the whole unit cell. Should require spinorial wave functions
+         <a href="vargs.html#nspinor">
+          <b>
+           nspinor
+          </b>
+         </a>
          = 2. Experimental: this does not work yet.
         </p>
     varname: prtspcur
@@ -20612,7 +20373,7 @@
     characteristics: null
     commentdefault: null
     commentdims: null
-    defaultval: 0
+    defaultval: 1
     definition: PRinT the SUSCEPtibility file (the irreducible polarizability)
     dimensions: scalar
     excludes: null
@@ -20624,26 +20385,6 @@
         only the _SCR file will be output.
         </p>
     varname: prtsuscep
-    vartype: integer
-- !variable
-    characteristics: null
-    commentdefault: null
-    commentdims: null
-    defaultval: 0
-    definition: PRinT V CouLoMB
-    dimensions: scalar
-    excludes: null
-    requires: null
-    section: varfil
-    text: |-
-        <p>
-        If set >= 0 outputs a file with the Coulomb potential, defined as Hartree + local Pseudopotential.
-        <p>
-        If <b>prtvclmb=1</b> and in case of PAW ([[usepaw]] > 0), the full core potential is added for the Hartree part, with the on-site corrections vh1 - vht1.
-        <p>
-        If <b>prtvclmb=2</b>, only the smooth part of the Coulomb potential is output.
-        <p>
-    varname: prtvclmb
     vartype: integer
 - !variable
     characteristics:
@@ -20667,7 +20408,7 @@
     commentdefault: null
     commentdims: null
     defaultval: 0
-    definition: PRinT V_HArtree
+    definition: PRinT V_XC
     dimensions: scalar
     excludes: null
     requires: null
@@ -20709,7 +20450,7 @@
     commentdefault: null
     commentdims: null
     defaultval: 0
-    definition: PRinT V_HXC
+    definition: PRinT V_XC
     dimensions: scalar
     excludes: null
     requires: null
@@ -20882,48 +20623,6 @@
         is reduced to total energy and convergence residuals only.
         </p>
     varname: prtvolimg
-    vartype: integer
-- !variable
-    characteristics: null
-    commentdefault: null
-    commentdims: null
-    defaultval: 0
-    definition: PRinT V_PSeudoPotential
-    dimensions: scalar
-    excludes: null
-    requires: null
-    section: varfil
-    text: |-
-        <p>
-         If set &gt;=1 , provide output of the local pseudo potential.
-         <br />
-        <p>
-         If [[ionmov]]==0, the name of the potential file will be
-        the root output name, followed by _VPSP.
-         <br />
-         If [[ionmov]]==1 or 2, potential files will be output
-        at each time step, with the name being made of
-         <ul>
-          <li>
-           the root output name,
-          </li>
-          <li>
-           followed by _TIMx , where
-        x is related to the timestep (see later)
-          </li>
-          <li>
-           then followed by _VPSP.
-          </li>
-         </ul>
-         The file structure of this unformatted output file is
-        described in
-         <a href="../../users/abinit_help.html#localpotfile">
-          section 6.6
-         </a>
-         of abinit_help.
-        No output is provided by a negative value of this variable.
-        </p>
-    varname: prtvpsp
     vartype: integer
 - !variable
     characteristics: null
@@ -21292,7 +20991,11 @@
         sites. Thus for example in a PAW data set for oxygen where the core is 1s<sup>2</sup>, the core charge is +6 (total nuclear charge
         minus core electron charge). In point charge models, which are much less accurate than PAW calculations, all atomic sites
         are treated as ions with charges determined by their valence states. In such a case oxygen almost always would have a
-        point charge of -2. The present variable taken together with [[prtefg]] performs a full
+        point charge of -2. The present variable taken together with
+           <a href="varpaw.html#prtefg">
+            prtefg=3
+           </a>
+           performs a full
         PAW computation of the electric field gradient and also a simple point charge computation. The user inputs whatever
         point charges he/she wishes for each atom type.
           </li>
@@ -21379,11 +21082,18 @@
         <p>
          If [[ionmov]]=13 (Molecular Dynamics),
         this temperature control can be used with&nbsp;
-        [[optcell]] =0, 1 (homogeneous cell deformation) or 2 (full cell deformation).
+         <a href="varrlx.html#optcell">
+          optcell
+         </a>
+         =0, 1 (homogeneous cell
+        deformation) or 2 (full cell deformation).
          <br />
          If [[imgmov]]=13 (Path Integral Molecular Dynamics),
         this temperature control can be used with&nbsp;
-        [[optcell]] =0 (NVT ensemble) or 2 (fully flexible NPT ensemble).
+         <a href="varrlx.html#optcell">
+          optcell
+         </a>
+         =0 (NVT ensemble) or 2 (fully flexible NPT ensemble).
         In that case, [[optcell]]=2 iS NOT USABLE yet.
         </p>
     varname: qmass
@@ -21803,8 +21513,14 @@
     requires: null
     section: vargs
     text: |
-        Radius for extra spheres the DOS is projected into. See [[natsph_extra]]
-        and [[xredsph_extra]]
+        Radius for extra spheres the DOS is projected into. See
+        <a href="#natsph_extra">
+         natsph_extra
+        </a>
+        and
+        <a href="#xredsph_extra">
+         xredsph_extra
+        </a>
         for the number and positions of the spheres.
     varname: ratsph_extra
     vartype: real
@@ -21864,10 +21580,14 @@
         it is bigger or equal than 1.  It introduces a double-grid system which permits
         to compute the electronic density on a coarse grid, using a fine grid
         (defined by [[ngfft]]) in the
-        discretisation of the green kernel (see [[recptrott]]).
+        discretisation of the green kernel (see
+         <ahref>
+          recptrott
+          ).
         Successively the density and the recursion coefficients are interpolated on the fine grid by
         FFT interpolation.  Note that ngfft/recgratio=number of points of the
         coarse grid has to be compatible with the parallelization parameters.
+         </ahref>
         </p>
     varname: recgratio
     vartype: integer
@@ -22106,7 +21826,11 @@
          <br />
          Works only for [[ionmov]]=2 (Broyden) and
         when an input wavefunction file is specified, thanks to the
-        appropriate values of [[irdwfk]] or [[getwfk]].
+        appropriate values of [[irdwfk]] or
+         <a href="varfil.html#getwfk">
+          getwfk
+         </a>
+         .
          <br />
          <br />
          NOTES :
@@ -22115,8 +21839,14 @@
         It cannot be one of the temporary wf files that exist when a job crashed.
          <br />
          * One cannot restart a calculation with a non-zero [[optcell]]
-        value from the (x,f) history of another run with a different non-zero [[optcell]]
-         value. Starting a non-zero [[optcell]]
+        value from the (x,f) history of another run with a different non-zero
+         <a href="varrlx.html#optcell">
+          optcell
+         </a>
+         value. Starting a non-zero
+         <a href="varrlx.html#optcell">
+          optcell
+         </a>
          run from a zero
         [[optcell]] run should work.
          <br />
@@ -22179,7 +21909,10 @@
         you always have something to recover from.
          <br />
          * You can take advantage of the appropriate values
-        of [[irdwfk]] or [[getwfk]]
+        of [[irdwfk]] or
+         <a href="varfil.html#getwfk">
+          getwfk
+         </a>
          to get a good wave function
         to continue your job.
         </p>
@@ -22857,44 +22590,6 @@
     commentdefault: null
     commentdims: null
     defaultval: 0
-    definition: Response Function with respect to 2nd derivative with respect to K
-    dimensions: scalar
-    excludes: null
-    requires: null
-    section: varrf
-    text: |-
-        <p>
-        UNUSABLE (in development)
-        </p>
-        <p>
-         Activates computation of second derivatives of ground state
-        wavefunctions with respect to wavevectors. This is not strictly a response
-        function but is a needed auxiliary quantity in the electric field
-        calculations (see [[rfelfd]]) The directions for the
-        derivatives are determined by [[rfdir]].
-         <ul>
-          <li>
-           0=&gt;no derivative calculation
-          </li>
-          <li>
-           1=&gt;calculation along diagonal directions (d2/(dk_i dk_i), natom+10 is activated)
-          </li>
-          <li>
-           2=&gt;calculation along off-diagonal directions (d2/(dk_i dk_j), natom+11 is activated)
-          </li>
-          <li>
-           3=&gt;calculation along all directions (both natom+10 and natom+11 are activated)
-          </li>
-         </ul>
-        </p>
-    varname: rfd2dk
-    vartype: integer
-- !variable
-    characteristics:
-    - '[[RESPFN]]'
-    commentdefault: null
-    commentdims: null
-    defaultval: 0
     definition: Response Function with respect to Derivative with respect to K
     dimensions: scalar
     excludes: null
@@ -23224,8 +22919,19 @@
          <br />
          To be more specific, keeping the default value of [[scalecart]]=1 to simplify the matter,
         [[rprim]] 1 2 3 4 5 6 7 8 9 corresponds to input of the
-        three primitive translations R1=(1,2,3) (to be multiplied by [[acell]](1)), R2=(4,5,6) (to be multiplied by
-        [[acell]](2)), and R3=(7,8,9) (to be multiplied by [[acell](3)).
+        three primitive translations R1=(1,2,3) (to be multiplied by
+         <a href="varbas.html#acell">
+          acell
+         </a>
+         (1)), R2=(4,5,6) (to be multiplied by
+         <a href="varbas.html#acell">
+          acell
+         </a>
+         (2)), and R3=(7,8,9) (to be multiplied by
+         <a href="varbas.html#acell">
+          acell
+         </a>
+         (3)).
          <br />
          Note carefully that the first
         three numbers input are the first column of [[rprim]], the next
@@ -24176,7 +23882,11 @@
         with a CPU effort that scales linearly with the number of frequencies.
         This approach is convenient when few frequencies are required, and is usually
         used in conjunction with plasmon-pole models in which only one or two frequencies are calculated,
-        according to the value of [[ppmodel]].
+        according to the value of
+         <a href='vargw.html#ppmodel"'>
+          ppmodel
+         </a>
+         .
          <br />
          Unfortunately a calculation based on the Adler-Wiser expression might be quite CPU demanding
         if the matrix elements of the self-energy operator are evaluated by performing numerically
@@ -24669,7 +24379,10 @@
         with respect to increasing Kohn-Sham energy difference.
         However, when [[td_mexcit]] is zero, all pairs are allowed.
          <br />
-         See [[td_maxene]]
+         See
+         <a href="varrf.html#td_mexcit">
+          td_maxene
+         </a>
          for an alternative
         way to decrease N.
         </p>
@@ -24686,73 +24399,54 @@
     excludes: null
     requires: null
     section: vardev
-    text: |4-
+    text: |-
+        <p>
          <ul>
           <li>
-           [[tfkinfunc]]=1 : <span style="text-decoration: underline;">Thomas-Fermi</span>
-        kinetic functional (explicit functional of the density) is used instead of Kohn-Sham kinetic
-        energy functional (implicit functional of the density through Kohn-Sham wavefunctions).<br/>
-        See Perrot F., Phys. Rev. A20,586-594 (1979)).
-           </li>
+           [[tfkinfunc]]=1 : Thomas-Fermi
+        kinetic functional (explicit functional of the density)
+        is used instead of Kohn-Sham kinetic energy functional (implicit functional of the density
+        through Kohn-Sham wavefunctions).
+           <br />
+          </li>
           <li>
-           [[tfkinfunc]]=11 : <span style="text-decoration: underline;">Thomas-Fermi-Weizsacker</span>
-        kinetic functional with Gradient Corrections is used.<br/>
-        The convergence of a calculation with this functional needs to be initialized from a calculation without Gradient Correction.
-        This is automatically done with [[tfkinfunc]]=11. For the initialization steps, the [[tfw_toldfe]] criterion is used.
-        When it is reached, then the Gradient Correction is added and the SCF cycle continues.<br/>
-        Note: to obtain the convergence of a Molecular Dynamics simulation with TFW, it is necessary to find the best set of
-        preconditionning parameters ([[diemix]], [[diemac]], [[dielng]]) and the best value of [[npulayit]] (if the default Pulay mixing is used).
-           </li>
-           <li>
-           [[tfkinfunc]]=12 : same as <b>tfkinfunc</b>=11,
-        but without the initialization steps. Gradient correction is directly added.
-           </li>
-        <li>
-           [[tfkinfunc]]=2 : the <span style="text-decoration: underline;">Recursion Method</span>
-        is used in order to compute electronic density, entropy, Fermi energy and eigenvalues energy.
-        This method computes the density without computing any orbital, is efficient at high temperature,
-        with a efficient parallelization (almost perfect scalability). When that option is in use, the
-        [[ecut]] input variable is no longer a convergence parameter ;
-        [[ngfft]] becomes the main convergence parameter: you should adapt ecut for the ngfft
-        grid you need (it is not yet automatically computed). Other convergence parameter are for the energetic values:
-        [[recnrec]], [[recptrott]], [[recnpath]].<br/>
+           [[tfkinfunc]]=2 : the Recursion Method is used in order to compute
+        electronic density, entropy, Fermi energy and eigenvalues energy. This
+        method computes the density without computing any orbital, is
+        efficient at high temperature, with a efficient parallelization
+        (almost perfect scalability). When that option is in use, the
+        [[ecut]] input variable is no longer a
+        convergence parameter ;
+        [[ngfft]] becomes
+        the main convergence parameter: you should adapt ecut for the ngfft
+        grid you need (it is not yet automatically computed). Other
+        convergence parameter are for the energetic values:
+        [[recnrec]], [[recptrott]],
+        [[recnpath]].
         Since the convergence of the self-consistent cycle
         is determined directly by the convergence of the density:
-        [[toldfe]], [[toldff]], [[tolrff]],
-        [[tolvrs]], [[tolwfr]] are not used, and are replaced by
+        [[toldfe]],
+        [[toldff]]
+        [[tolrff]],
+        [[tolvrs]],
+        [[tolwfr]] are not used, and are replaced by
         [[rectolden]]; the energetic values, except for the fermi energy, are only
         computed during the latest SFC cycle : the output file will show a
         jump of the total energy at the end, but it is not because of a bad
         convergence behavior. Computational speed can be improved by the use
         of  [[recrcut]] and  [[recgratio]].
         The recursion method has not be tested in the case of non cubic cell
-        or with the use of symmetries.<br/>
+        or with the use of symmetries.
         In the recursion method the following variables are set to:
-        [[useylm]]=1,  [[userec]]=1.
+           <br />
+           [[useylm]]=1,
+           <br />
+           [[userec]]=1.
           </li>
          </ul>
         </p>
     varname: tfkinfunc
     vartype: integer
-- !variable
-    characteristics:
-    - '[[ENERGY]]'
-    commentdefault: null
-    commentdims: null
-    defaultval: 1.0E-6 or [[toldfe]] is present
-    definition: 'Thomas-Fermi-Weizsacker: TOLerance on the DiFference of total
-        Energy, for initialization steps'
-    dimensions: scalar
-    excludes: null
-    requires: '[[tfkinfunc]]=11'
-    section: vardev
-    text: |
-        This input variable has the same definition as [[toldfe]] and is only relevant when [[tfkinfunc]]=11.<br/>
-        It sets a tolerance for absolute differences of total energy that, reached TWICE successively, will cause the
-        initialization steps (without gradient correction) to stop and the gradient correction to be added.<br/>
-        Can be specified in Ha (the default), Ry, eV or Kelvin, since it has the 'ENERGY' characteristics.
-    varname: tfw_toldfe
-    vartype: real
 - !variable
     characteristics:
     - '[[NO_MULTI]]'
@@ -24988,7 +24682,10 @@
     text: |-
         <p>
          Sets a maximal absolute energy tolerance (in hartree, averaged over dynamic images)
-        below which iterations on images (the one governed by the [[ntimimage]]
+        below which iterations on images (the one governed by the
+         <a href="varrlx.html#ntimimage">
+          ntimimage
+         </a>
          input variable) will stop.
          <br />
          This is to be used when trying to optimize a
@@ -25018,7 +24715,10 @@
         (in hartree/Bohr) below which
         BFGS structural relaxation iterations will stop.
          <br />
-         Can also control tolerance on stresses, when [[optcell]]
+         Can also control tolerance on stresses, when
+         <a href="varrlx.html#optcell">
+          optcell
+         </a>
          /=0,
         using the conversion factor [[strfact]].
         This tolerance applies to any particular cartesian
@@ -25026,7 +24726,10 @@
         See the parameter [[ionmov]].
          <br />
          This is to be used when trying to equilibrate a
-        structure to its lowest energy configuration ( [[ionmov]]
+        structure to its lowest energy configuration (
+         <a href="varrlx.html#ionmov">
+          ionmov
+         </a>
          =2).
          <br />
          A value of about 5.0d-5 hartree/Bohr or smaller
@@ -25040,7 +24743,7 @@
     characteristics: null
     commentdefault: null
     commentdims: null
-    defaultval: 0.005
+    defaultval: 0.0050
     definition: TOLerance on the Relative Difference of Eigenenergies
     dimensions: scalar
     excludes: null
@@ -25158,8 +24861,7 @@
          <br />
          Effective only when SCF cycles are done ([[iscf]]&gt;0).
          <br />
-         To get accurate stresses may be quite demanding. For simple materials with internal positions determined by symmetries,
-         a value of [[tolvrs]]=10^-12 empirically leads to a very approximate 10^-6 atomic unit accuracy for the optimized lattice parameter.
+         To get accurate stresses may be quite demanding.
         </p>
         <p>
          Additional explanation : the residual of the potential is the difference between the
@@ -25417,12 +25119,12 @@
     definition: calculation of the screened interaction U with the Constrained RPA method
     dimensions: scalar
     excludes: null
-    requires: '[[nspinor]] == 1'
+    requires: null
     section: vargw
     text: |-
         <p>
          When equal to one or two, this variable allows for the calculation of U with the cRPA method.
-        An explicit test is shown in automatic tests v7/t23-t24-t25 and in v7/t68-t69.
+        An explicit test is shown in automatic tests v7/t23-t24-t25 and in v7/t68.
         The present implementation is parallelized (as for usual [[GW]] calculations), use symetry over k-points only for calculations involving one correlated atom,
         and can be use when correlated bands are entangled or not.
         The constrained calculation of the polarisability can be done by eliminating
@@ -25431,19 +25133,15 @@
         <p>
          For [[ucrpa]] = 1, two solutions are possible. The first one is to specify
         (with the variable [[ucrpa_bands]]) the bands to exclude from the polarisability calculation.
-        The second solution is to provide an energy window (with the variable [[ucrpa_window]]). The electronic transitions
+        The second solution is to provide an energy window (with the variable [[ucrpa_window]]). The transition
         inside this window will not be taken into account in
         the polarisability calculation.
         </p>
         <p>
-         For [[ucrpa]] = 2, the ucrpa_bands should be equal to the [[dmftbandi]] and [[dmftbandf]]
+         For [[ucrpa]] = 2, the ucrpa_bands should be equal to the dmftbandi and dmftbandf
         values, and the polarisability of the correlated subspace
-        is constructed with a band and k-point dependent weight.
-        </p>
-        <p>
-        The implementation is restricted to the case of [[nspinor]] = 1 (collinear case).
-        </p>
-        <p>
+        is constructed with a band and k-point dependant weight.
+
         A short presentation of the method and some aspect of the implementation can be found in Section II and Appendix A of
          <a href="http://journals.aps.org/prb/abstract/10.1103/PhysRevB.89.125110">
           B. Amadon, T. Applencourt and F. Bruneval Phys. Rev. B 89, 125110 (2014)
@@ -25772,7 +25470,10 @@
           B. Amadon, F. Lechermann, A. Georges, F.  Jollet, T. O.  Wehling, and A. I.  Lichtenstein, Phys. Rev. B 77(20), (2008)
          </a>
          , for Wannier functions and
-          B. Amadon, J. Phys.: Condens. Matter 24 075604 (2012) (doi:10.1088/0953-8984/24/7/075604),
+         <a href="http://iopscience.iop.org/0953-8984/24/7/075604">
+          B. Amadon, J. Phys.: Condens. Matter 24 075604 (2012)
+         </a>
+         ,
         for self-consistency and Hubbard I implementation.
 
         If [[usedmft]]=1 and [[nbandkss]]/=0, then, the DFT+DMFT calculation is not done and only projections are computed at the end
@@ -26961,43 +26662,11 @@
     section: vardev
     text: |-
         <p>
-         The DFT-D methods (S. Grimme approach) dispersion potentials, [[vdw_xc]]==5 or 6 or 7, include a pair potential.
+         The DFT-D2 (S. Grimme approach) dispersion potentiali, [[vdw_xc]]==5, is implemented as a pair potential.
         The number of pairs of atoms contributing to the potential is necessarily limited. To be included
         in the potential a pair of atom must have contribution to the energy larger than [[vdw_tol]].
         </p>
     varname: vdw_tol
-    vartype: real
-- !variable
-    characteristics:
-    - '[[DEVELOP]]'
-    commentdefault: Do include the 3-body term in the correction
-    commentdims: null
-    defaultval: -1
-    definition: van der Waals TOLerance for 3-Body Term
-    dimensions: scalar
-    excludes: null
-    requires: '[[vdw_xc]] == 6'
-    section: vardev
-    text: |-
-        Control the computation of the 3-body correction inside DFT-D3 dispersion correction (Grimme's approach) to the total energy:
-        <br />
-        -If <b> vdw_tol_3bt</b>&lt;0, no 3-body correction.
-        <br />
-        -If <b> vdw_tol_3bt</b>&gt;0, the 3-body term is included with a tolerance = <b>vdw_tol_3bt</b>
-        <br />
-        <br />
-        DFT-D3 as proposed by S. Grimme adds two contributions to the total energy in order to take into account of the dispersion:
-        <br />
-         <ul>
-        <li>
-        A pair-wise potential for which the tolerance is controlled by [[vdw_tol]]
-        </li>
-        <br />
-        <li>A 3-body term which is obtained by summing over all triplets of atoms. Each individual contribution depends of the distances and angles between the three atoms. As it is impossible to sum over all the triplets in a periodic system, one has to define a stopping criterium which is here that an additional contribution to the energy must be higher than <b>vdw_tol_3bt</b>
-        </li>
-        </ul>
-        The last term has been predicted to have an important effect for large molecules (see for e.g. <i> Grimme S.,  J. Chem. Phys. 132, 154104 (2010) </i>). It is however quite costly in computational time for periodic systems and seems to lead to an overestimation of lattice parameters for weakly bound systems (see for e.g. <i> Reckien W., J. Chem. Phys. 132, 154104(2010) </i>). Still, its contribution to energy, to forces and to stress is available (not planned for elastic constants, dynamical matrix and internal strains)
-    varname: vdw_tol_3bt
     vartype: real
 - !variable
     characteristics:
@@ -27073,31 +26742,11 @@
           <li>
            5: apply vdw-DFT-D2 as proposed by S. Grimme (adding a semi-empirical dispersion potential)
            <br />
-           Available only for ground-state calculations and response functions; see [[vdw_tol]] variable
+           Available only for ground-state calculations ; see [[vdw_tol]] variable
         to control convergency
            <br />
            <i>
             J. Comp. Chem. 27, 1787 (2006)
-           </i>
-          </li>
-        <li>
-           6: apply vdw-DFT-D3 as proposed by S. Grimme (refined version of DFT-D2)
-           <br />
-           Available only for ground-state calculations and response functions except strain; see [[vdw_tol]] variable
-        to control convergency and [[vdw_dftd3_3bt]] variable to include 3-body corrections
-           <br />
-           <i>
-            J. Chem. Phys. 132, 154104 (2010)
-           </i>
-          </li>
-           <li>
-           7: apply vdw-DFT-D3(BJ) as proposed by Grimme (based on Becke-Jonhson method J. Chem. Phys. 2004-2006)
-           <br />
-           Available only for ground-state calculations and response functions except strain; see [[vdw_tol]] variable
-        to control convergency
-           <br />
-           <i>
-            J. Comput. Chem. 32, 1456 (2011)
            </i>
           </li>
           <li>
@@ -27269,7 +26918,11 @@
         Units are not
         critical as this is a fictitious damping used to relax
         structures. A typical value for silicon is 400 with
-        [[dtion]] of 350 and atomic mass 28 [[amu]]. Critical
+        [[dtion]] of 350 and atomic mass 28
+        <a href="varrlx.html#amu">
+         amu
+        </a>
+        . Critical
         damping is most desirable and is found only by
         optimizing [[vis]] for a given situation.
         <br />
@@ -27596,9 +27249,15 @@
         <p>
          Gives the weights determining how the motion of atoms
         is constrained
-        during structural optimization or molecular dynamics (see [[nconeq]]
+        during structural optimization or molecular dynamics (see
+         <a href="varrlx.html#nconeq">
+          nconeq
+         </a>
          , [[natcon]],
-        and [[iatcon]]). For each of the [[nconeq]]
+        and [[iatcon]]). For each of the
+         <a href="varrlx.html#nconeq">
+          nconeq
+         </a>
          independent constraint equations,
         wtatcon is a 3*[[natcon]] array giving
         weights, W
@@ -27704,22 +27363,6 @@
     vartype: real
 - !variable
     characteristics: null
-    commentdefault: Except when [[qptopt]]/=0
-    commentdims: null
-    defaultval: 1
-    definition: WeighTs for the current Q-points
-    dimensions: scalar
-    excludes: null
-    requires: null
-    section: vargs
-    text: |-
-        <p>
-         Gives the current q-point weight.
-        </p>
-    varname: wtq
-    vartype: real
-- !variable
-    characteristics: null
     commentdefault: null
     commentdims: null
     defaultval: 0
@@ -27729,7 +27372,9 @@
     requires: null
     section: vargs
     text: |
-        This variable is used for the wavelets capabilities of ABINIT (see [[usewvl]]
+        This variable is used for the wavelets capabilities of ABINIT (see
+        <a href="varbas.html#usewvl">
+         usewvl
         </a>
         ).
         It is used to compare the results obtained with ABINIT
@@ -27751,7 +27396,10 @@
     text: |-
         <p>
          This factor is used to defined the expansion of the coarse resolution
-        grid in the case of wavelets (seea [[usewvl]]
+        grid in the case of wavelets (see
+         <a href="varbas.html#usewvl">
+          usewvl
+         </a>
          ). The grid is made of
         points inside spheres centered on atoms. The radius of these
         spheres are the product between this factor and the covalent
@@ -27774,10 +27422,15 @@
     text: |-
         <p>
          This factor is used to defined the expansion of the fine resolution
-        grid in the case of wavelets (see [[usewvl]]
+        grid in the case of wavelets (see
+         <a href="varbas.html#usewvl">
+          usewvl
+         </a>
          ). This fine resolution
         grid has the same grid step than the coarse one (see
-        [[wvl_crmult]]
+         <a href="vargs.html#wvl_crmult">
+          wvl_crmult
+         </a>
          ), but on each
         point, 8 coefficients are stored instead of one, increasing the
         precision of the calculation in this area. The grid is made of
