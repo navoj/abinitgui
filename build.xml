@@ -13,7 +13,7 @@
     <property name="project.name" value="AbinitGUI" />
     
     <property name="author" value="Flavio ABREU ARAUJO (abreuaraujo.flavio@gmail.com) and Yannick GILLET (yannick.gillet@hotmail.com)" />
-    <property name="version.num" value="2015a" />
+    <property name="version.num" value="2016a" />
     <property name="www" value="http://gui.abinit.org" />
     
     <exec outputproperty="svna.version" executable="svnversion">
