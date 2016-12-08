@@ -307,7 +307,7 @@ public class MainFrame extends JFrame {
         
         remotePseudoDatabase = new PseudoDatabase();
         try{
-            remotePseudoDatabase.fromUrl("http://gui.abinit.org/PSPS/pseudos.yml");
+            remotePseudoDatabase.fromUrl("http://gui.abinit.org/PSPS/pseudos_new.yml");
         }catch(Exception e)
         {
             printERR("Error connecting to gui.abinit.org, will use local database of pseudos");

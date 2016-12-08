@@ -182,6 +182,8 @@ public class MendTabDialogOnline extends JDialog {
         LDA_Teter_CheckBox.addActionListener(al);
         PAW_GGA_CheckBox.addActionListener(al);
         PAW_LDA_CheckBox.addActionListener(al);
+        ONCVPSP_LDA_CheckBox.addActionListener(al);
+        ONCVPSP_GGA_CheckBox.addActionListener(al);
 
         /*Object[][] atomsDB = Atom.getAtomsBD();
         for (int i = 0; i < atomsDB.length; i++) {
@@ -212,6 +214,8 @@ public class MendTabDialogOnline extends JDialog {
         LDA_GTH_CheckBox = new javax.swing.JCheckBox();
         PAW_GGA_CheckBox = new javax.swing.JCheckBox();
         PAW_LDA_CheckBox = new javax.swing.JCheckBox();
+        ONCVPSP_GGA_CheckBox = new javax.swing.JCheckBox();
+        ONCVPSP_LDA_CheckBox = new javax.swing.JCheckBox();
         userPSPButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jB_Sm = new javax.swing.JButton();
@@ -405,6 +409,26 @@ public class MendTabDialogOnline extends JDialog {
             }
         });
 
+        buttonGroup.add(ONCVPSP_GGA_CheckBox);
+        ONCVPSP_GGA_CheckBox.setText("ONCVPSP GGA PBE");
+        ONCVPSP_GGA_CheckBox.setActionCommand("ONCVPSP_GGA_PBE");
+        ONCVPSP_GGA_CheckBox.setName("LDA_Teter"); // NOI18N
+        ONCVPSP_GGA_CheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ONCVPSP_GGA_CheckBoxActionPerformed(evt);
+            }
+        });
+
+        buttonGroup.add(ONCVPSP_LDA_CheckBox);
+        ONCVPSP_LDA_CheckBox.setText("ONCVPSP LDA PW");
+        ONCVPSP_LDA_CheckBox.setActionCommand("ONCVPSP_LDA_PW");
+        ONCVPSP_LDA_CheckBox.setName("LDA_HGH"); // NOI18N
+        ONCVPSP_LDA_CheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ONCVPSP_LDA_CheckBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pspTypePanelLayout = new javax.swing.GroupLayout(pspTypePanel);
         pspTypePanel.setLayout(pspTypePanelLayout);
         pspTypePanelLayout.setHorizontalGroup(
@@ -429,6 +453,10 @@ public class MendTabDialogOnline extends JDialog {
                 .addGroup(pspTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(PAW_GGA_CheckBox)
                     .addComponent(PAW_LDA_CheckBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pspTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ONCVPSP_GGA_CheckBox)
+                    .addComponent(ONCVPSP_LDA_CheckBox))
                 .addContainerGap())
         );
         pspTypePanelLayout.setVerticalGroup(
@@ -453,6 +481,10 @@ public class MendTabDialogOnline extends JDialog {
                 .addGroup(pspTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LDA_HGH_CheckBox)
                     .addComponent(PAW_LDA_CheckBox)))
+            .addGroup(pspTypePanelLayout.createSequentialGroup()
+                .addComponent(ONCVPSP_GGA_CheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ONCVPSP_LDA_CheckBox))
         );
 
         LDA_FHI_CheckBox.getAccessibleContext().setAccessibleName("LDA_FHI");
@@ -1318,6 +1350,14 @@ public class MendTabDialogOnline extends JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_userPSPButtonActionPerformed
 
+    private void ONCVPSP_LDA_CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ONCVPSP_LDA_CheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ONCVPSP_LDA_CheckBoxActionPerformed
+
+    private void ONCVPSP_GGA_CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ONCVPSP_GGA_CheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ONCVPSP_GGA_CheckBoxActionPerformed
+
     public String getPSPSelected() {
         Enumeration buttons = buttonGroup.getElements();
         while (buttons.hasMoreElements()) {
@@ -1580,6 +1620,8 @@ public class MendTabDialogOnline extends JDialog {
     private javax.swing.JCheckBox LDA_HGH_CheckBox;
     private javax.swing.JCheckBox LDA_TM_CheckBox;
     private javax.swing.JCheckBox LDA_Teter_CheckBox;
+    private javax.swing.JCheckBox ONCVPSP_GGA_CheckBox;
+    private javax.swing.JCheckBox ONCVPSP_LDA_CheckBox;
     private javax.swing.JCheckBox PAW_GGA_CheckBox;
     private javax.swing.JCheckBox PAW_LDA_CheckBox;
     private javax.swing.ButtonGroup buttonGroup;

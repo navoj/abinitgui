@@ -118,6 +118,8 @@ public class AtomEditorOnline extends AbstractCellEditor
                 case "NC_LDA_Teter":
                 case "PAW_LDA_PW":
                 case "PAW_GGA_PBE":
+                case "ONCVPSP_LDA_PW":
+                case "ONCVPSP_GGA_PBE":
                     {
                         String pathToPSP = MainFrame.getCurrentProject().getPSPPath();
                         Object[][] atomsDB = Atom.getAtomsBD();
